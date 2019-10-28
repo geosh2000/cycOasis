@@ -168,6 +168,8 @@ import { ExtranetComponent } from './components/extranet/extranet.component';
 import { ExtPapeletaComponent } from './components/extranet/ext-papeleta.component';
 import { CotizaTourComponent } from './components/cotizador/cotiza-tour/cotiza-tour.component';
 import { ExtranetListComponent } from './components/extranet/extranet-list/extranet-list.component';
+import { CotizaAutoComponent } from './components/cotizador/cotiza-auto/cotiza-auto.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -275,7 +277,8 @@ import { ExtranetListComponent } from './components/extranet/extranet-list/extra
     ExtranetComponent,
     ExtPapeletaComponent,
     CotizaTourComponent,
-    ExtranetListComponent
+    ExtranetListComponent,
+    CotizaAutoComponent
 
   ],
   imports: [
@@ -351,7 +354,7 @@ import { ExtranetListComponent } from './components/extranet/extranet-list/extra
     // ==================================================
     // END ANGULAR MATERIAL
     // ==================================================
-
+    NgxMaterialTimepickerModule.setLocale('es-MX'),
   ],
   providers: [
     NavbarService,

@@ -34,7 +34,7 @@ export class JornadasComponent implements OnInit {
   }
 
   formatDate(datetime, format){
-    return moment.tz(datetime, 'America/Mexico_City').tz( this._zh.zone ).format(format)
+    return moment.tz(datetime, this._zh.defaultZone).tz( this._zh.zone ).format(format)
   }
 
   progressProps( val, originalBg = 'primary' ){

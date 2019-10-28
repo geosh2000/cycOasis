@@ -7,7 +7,8 @@ import { ApiService } from './api.service';
 })
 export class ZonaHorariaService {
 
-  zone:any = 'America/Mexico_city'
+  zone:any = 'America/Bogota'
+  defaultZone:any = 'America/Bogota'
   zoneIdx:any = 0
   isCun:boolean = false
 
@@ -19,7 +20,7 @@ export class ZonaHorariaService {
           this.zone = res['data']['zonaHoraria']
           this.zoneIdx = zone
         })
-    this.isCun = this.zone != 'America/Mexico_city' ? true : false
+    this.isCun = this.zone != 'America/Bogota' ? true : false
   }
 
 }

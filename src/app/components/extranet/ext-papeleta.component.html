@@ -72,12 +72,16 @@
                                 <p class="colTitle">Adultos</p>
                                 <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['adultos'] }}</b></p>
                             </div>
+                            <div class="m-1 text-center " *ngIf="data['items'][0]['Servicio'] == 'DayPass'">
+                                <p class="colTitle">Juniors</p>
+                                <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['juniors'] }}</b></p>
+                            </div>
                             <div class="m-1 text-center ">
                                 <p class="colTitle">Menores</p>
                                 <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['menores'] }}</b></p>
                             </div>
-                            <div class="m-1 text-center ">
-                                <p class="colTitle">Infantes</p>
+                            <div class="m-1 text-center " *ngIf="data['items'][0]['Servicio'] != 'DayPass'">
+                                <p class="colTitle">{{data['items'][0]['Servicio']}}</p>
                                 <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['infantes'] }}</b></p>
                             </div>
                         </div>
@@ -86,60 +90,92 @@
                         <div class="rowTitle">
                             <p class="rowTitleTxt" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}">Fecha{{ data['items'][0]['Servicio'] == 'Traslados' ? ' llegada' : '' }}: </p>
                         </div>
-                        <div class="d-flex justify-content-lg-between containExtra">
-                            <ng-container *ngIf="data['items'][0]['Servicio'] == 'DayPass'">
-                                <div class="m-1 text-center ">
-                                    <p class="colTitle">Fecha de Servicio</p>
-                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
-                                </div>
-                                <div class="m-1 text-center ">
-                                    <p class="colTitle">Tipo de Servicio</p>
-                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['categoria'] }}</b></p>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="data['items'][0]['Servicio'] == 'Tours'">
-                                <div class="m-1 text-center ">
-                                    <p class="colTitle">Fecha de Servicio</p>
-                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
-                                </div>
-                                <div class="m-1 text-center ">
-                                    <p class="colTitle">Pick-Up <small>(si aplica)</small></p>
-                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['pickup'] }}</b></p>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="data['items'][0]['Servicio'] == 'Traslados'">
-                                <div class="m-1 text-center ">
-                                    <p class="colTitle">Fecha Llegada</p>
-                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
-                                </div>
-                                <div class="m-1 text-center ">
-                                    <p class="colTitle">Hora Llegada</p>
-                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['hora_in'] }} hrs.</b></p>
-                                </div>
-                                <div class="m-1 text-center ">
-                                    <p class="colTitle">Vuelo Llegada</p>
-                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['vuelo_in'] }}</b></p>
-                                </div>
-                            </ng-container>
+                        <div class="containExtra">
+                            <div class="d-flex justify-content-lg-between containExtra">
+                                <ng-container *ngIf="data['items'][0]['Servicio'] == 'DayPass'">
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Fecha de Servicio</p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
+                                    </div>
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Tipo de Servicio</p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['categoria'] }}</b></p>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="data['items'][0]['Servicio'] == 'Tours'">
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Fecha de Servicio</p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
+                                    </div>
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Pick-Up <small>(si aplica)</small></p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['pickup'] }}</b></p>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="data['items'][0]['Servicio'] == 'Traslados'">
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Fecha Llegada</p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
+                                    </div>
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Hora Llegada</p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['hora_in'] }} hrs.</b></p>
+                                    </div>
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Vuelo Llegada</p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['vuelo_in'] }}</b></p>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="alert alert-info text-center" role="alert" *ngIf="data['items'][0]['Servicio'] == 'Traslados'">
+                                <mat-form-field class="example-form-field">
+                                    <input matInput type="text" autocomplete="off" placeholder="Registrar Pickup" [value]="data['items'][0]['dtPickUpIn']" [readonly]="puiRo" #puiV>
+                                    <button mat-button matSuffix mat-icon-button aria-label="Editar" (click)="puiRo = false" *ngIf="puiRo && !loading['pui']">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    <button mat-button matSuffix mat-icon-button aria-label="Editar" (click)="savePu('pui', puiV)" *ngIf="!puiRo && !loading['pui']">
+                                            <mat-icon>save</mat-icon>
+                                        </button>
+                                    <span *ngIf="loading['pui']">
+                                        <i class="fas fa-spinner fa-pulse"></i>
+                                    </span>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
                     <div class="container d-flex justify-content-lg-between p-2 align-items-center ml-auto mr-auto" *ngIf="data['items'][0]['salida'] != null">
                         <div class="rowTitle">
                             <p class="rowTitleTxt" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}">Fecha Salida: </p>
                         </div>
-                        <div class="d-flex justify-content-lg-between containExtra">
+                        <div class="containExtra">
+                            <div class="d-flex justify-content-lg-between containExtra">
 
-                            <div class="m-1 text-center ">
-                                <p class="colTitle">Fecha Salida</p>
-                                <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['salida'], 'ddd DD MMM YYYY') }}</b></p>
+                                <div class="m-1 text-center ">
+                                    <p class="colTitle">Fecha Salida</p>
+                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['salida'], 'ddd DD MMM YYYY') }}</b></p>
+                                </div>
+                                <div class="m-1 text-center ">
+                                    <p class="colTitle">Hora Salida</p>
+                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['hora_out'] }} hrs.</b></p>
+                                </div>
+                                <div class="m-1 text-center ">
+                                    <p class="colTitle">Vuelo Salida</p>
+                                    <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['vuelo_out'] }}</b></p>
+                                </div>
                             </div>
-                            <div class="m-1 text-center ">
-                                <p class="colTitle">Hora Salida</p>
-                                <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['hora_out'] }} hrs.</b></p>
-                            </div>
-                            <div class="m-1 text-center ">
-                                <p class="colTitle">Vuelo Salida</p>
-                                <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['vuelo_out'] }}</b></p>
+                            <div class="alert alert-info text-center" role="alert" *ngIf="data['items'][0]['Servicio'] == 'Traslados'">
+                                <mat-form-field class="example-form-field">
+                                    <input matInput type="text" autocomplete="off" placeholder="Registrar Pickup" [value]="data['items'][0]['dtPickUpOut']" [readonly]="puoRo" #puoV>
+                                    <button mat-button matSuffix mat-icon-button aria-label="Editar" (click)="puoRo = false" *ngIf="puoRo && !loading['puo']">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    <button mat-button matSuffix mat-icon-button aria-label="Editar" (click)="savePu('puo', puoV)" *ngIf="!puoRo && !loading['puo']">
+                                            <mat-icon>save</mat-icon>
+                                        </button>
+                                    <span *ngIf="loading['puo']">
+                                        <i class="fas fa-spinner fa-pulse"></i>
+                                    </span>
+                                </mat-form-field>
                             </div>
                         </div>
                     </div>
@@ -152,6 +188,10 @@
                             <div class="m-1 text-center ">
                                 <p class="colTitle">Recepción</p>
                                 <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['hotel'] }}</b></p>
+                            </div>
+                            <div class="m-1 text-center ">
+                                <p class="colTitle">Zona</p>
+                                <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['Zona'] }}</b></p>
                             </div>
                         </div>
                     </div>
@@ -266,6 +306,17 @@
                     <div class="clientConcept"><b>Pagos:</b></div>
                     <div class="clientInfo"><button mat-button color="primary" data-toggle="modal" data-target="#vouchers">Ver {{ data['payments'].length }} Vouchers</button></div>
                 </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="clientConcept"><b>Vouchers:</b></div>
+                    <div class="clientInfo">
+                        <a mat-mini-fab color="primary" [href]="hrIndex + '/vouchers/' + viewLoc" target="_blank">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </a>
+                        <button class="ml-3" mat-mini-fab color="accent" (click)="_upl.build('Voucher '+ viewLoc, viewLoc, 'voucher_'+viewLoc, true, 'voucher')">
+                            <mat-icon>note_add</mat-icon>
+                        </button>
+                    </div>
+                </div>
 
             </div>
             <!-- ====================== FIN LATERAL CLIENTE ====================== -->
@@ -331,3 +382,4 @@
     </div>
 </div>
 <!-- ====================== FIN VOUCHERS  ====================== -->
+<app-upload-image></app-upload-image>

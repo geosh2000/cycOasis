@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable, Output, EventEmitter, Input } from '@ang
 import { NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import * as moment from 'moment-timezone';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 const equals = ({ one, two }: { one: NgbDateStruct; two: NgbDateStruct; }) => {
   return one && two && two.year == one.year && two.month == one.month && two.day == one.day;
@@ -116,6 +117,14 @@ export class SearchBarCotizadorComponent implements OnInit {
   @Input() isCode = false
   @Input() groupsTfa = []
   @Input() pax = true
+  @Input() paxJr = false
+  @Input() endDate = false
+  @Input() endDateSep = false
+  @Input() timepicker = false
+  @Input() maxAdultos = 50
+  @Input() maxMenores = 3
+  @Input() maxJuniors = 3
+  @Input() agesDispl = true
   @Input() minDate:NgbDateStruct = {
     day: parseInt(moment().add(1, 'days').format('DD')),
     month: parseInt(moment().add(1, 'days').format('MM')),
@@ -125,11 +134,13 @@ export class SearchBarCotizadorComponent implements OnInit {
   pickNum:any = []
   adults:any = 1
   min:any = 0
+  jr:any = 0
   moneda = true
   minA = []
   selectedCode:any = 'ccenter'
-
-  
+  horaInicio:any
+  horaFin:any
+  searchFlag = true 
 
   isLocal = false
   isGroup = false
@@ -144,7 +155,7 @@ export class SearchBarCotizadorComponent implements OnInit {
   inicio: any;
   fin: any;
 
-  constructor() {
+  constructor(public toastr: ToastrService) {
     for(let i=0; i<=50; i++){
       this.pickNum.push(i)
     }
@@ -159,10 +170,45 @@ export class SearchBarCotizadorComponent implements OnInit {
     }
   }
 
-  onDateSelection(date: NgbDateStruct, el ) {
-    this.inicio = moment({year: date.year, month: date.month - 1, day: date.day}).format('YYYY-MM-DD');
-    jQuery('#picker').val(`${moment({year: date.year, month: date.month - 1, day: date.day}).format('DD/MM/YYYY')}`);
-    el.close();
+  onDateSelection(date: NgbDateStruct, el, tp = 'd' ) {
+    if( !this.endDate ){
+      switch( tp ){
+        case 'd':
+            this.inicio = moment({year: date.year, month: date.month - 1, day: date.day}).format('YYYY-MM-DD');
+            jQuery('#picker').val(`${moment({year: date.year, month: date.month - 1, day: date.day}).format('DD/MM/YYYY')}`);
+            if(this.timepicker){
+              this.dateTimePicker(this.inicio, true)
+            }
+            break;
+          case 'ds':
+            this.fin = moment({year: date.year, month: date.month - 1, day: date.day}).format('YYYY-MM-DD');
+            jQuery('#pickerDs').val(`${moment({year: date.year, month: date.month - 1, day: date.day}).format('DD/MM/YYYY')}`);
+            if(this.timepicker){
+              this.dateTimePicker(this.fin, false)
+            }
+            break;
+      }
+
+      el.close();
+    }else{
+      if (!this.fromDate && !this.toDate) {
+        this.fromDate = date;
+        this.inicio = moment({year: date.year, month: date.month - 1, day: date.day}).format('YYYY-MM-DD');
+        jQuery('#picker').val(`${moment({year: date.year, month: date.month - 1, day: date.day}).format('DD/MM')} a `);
+      } else if (this.fromDate && !this.toDate && (after(date, this.fromDate) || equals({ one: date, two: this.fromDate }))) {
+        this.toDate = date;
+        this.fin = moment({year: date.year, month: date.month - 1, day: date.day}).format('YYYY-MM-DD');
+        jQuery('#picker').val(`${moment(this.inicio).format('DD/MM')} a ${moment({year: date.year, month: date.month - 1, day: date.day}).format('DD/MM')}`);
+        el.close();
+        // this.getAsistencia()
+      } else {
+        this.toDate = null;
+        this.fromDate = date;
+        this.inicio = moment({year: date.year, month: date.month - 1, day: date.day}).format('YYYY-MM-DD');
+        jQuery('#picker').val(`${moment({year: date.year, month: date.month - 1, day: date.day}).format('DD/MM')} a `);
+        this.fin = null;
+      }
+    }
   }
 
   isHovered = date => this.fromDate && !this.toDate && this.hoveredDate && after(date, this.fromDate) && before(date, this.hoveredDate);
@@ -171,6 +217,18 @@ export class SearchBarCotizadorComponent implements OnInit {
   isTo = date => equals({ one: date, two: this.toDate });
 
   save(){
+
+    if( this.timepicker ){
+      if( this.horaInicio == null ){
+        this.toastr.error('Falta la hora!', 'Debes ingresar una hora de inicio')
+        return false
+      }
+      if( this.endDateSep && this.horaFin == null ){
+        this.toastr.error('Falta la hora!', 'Debes ingresar una hora de fin')
+        return false
+      }
+    }
+
     let ageSum = []
 
     for( let i=0; i < this.adults; i++ ){
@@ -182,16 +240,23 @@ export class SearchBarCotizadorComponent implements OnInit {
       ageSum.push({type: 'minor', age})
     }
 
-    this.search.emit({
-      inicio: this.inicio,
+    let r = {
+      inicio: this.horaInicio == null ? this.inicio : this.horaInicio,
       adults: this.adults,
       min: parseInt(this.min),
+      jr: this.jr,
       moneda: this.moneda,
       ages: ageSum,
       isLocal: this.isLocal,
       isGroup: this.isGroup,
       selectedCode: this.selectedCode
-    })
+    }
+
+    if( this.endDate || this.endDateSep ){
+      r['fin'] = this.horaFin == null ? this.fin : this.horaFin
+    }
+
+    this.search.emit(r)
   }
 
   reset(){
@@ -208,6 +273,27 @@ export class SearchBarCotizadorComponent implements OnInit {
     this.e3=0
     this.e2=0
     this.e1=0
+  }
+
+  dateTimePicker(e, start){
+    if( start ){
+      if( this.horaInicio ){
+        this.horaInicio = moment(`${e} ${moment(this.horaInicio).format('HH:mm')}:00`).format('YYYY-MM-DD HH:mm:ss')
+      }
+    }else{
+      if( this.horaFin ){
+        this.horaFin = moment(`${e} ${moment(this.horaFin).format('HH:mm')}:00`).format('YYYY-MM-DD HH:mm:ss')
+      }
+    }
+  }
+
+  setTimePicker( e, start, v ){
+    if( start ){
+      this.horaInicio = moment(`${this.inicio} ${e}:00`).format('YYYY-MM-DD HH:mm:ss')
+    }else{
+      this.horaFin = moment(`${this.fin} ${e}:00`).format('YYYY-MM-DD HH:mm:ss')
+    }
+    console.log( this.horaInicio, this.horaFin)
   }
 
 

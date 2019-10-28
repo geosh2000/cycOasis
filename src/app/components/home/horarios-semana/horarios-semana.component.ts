@@ -89,7 +89,7 @@ export class HorariosSemanaComponent implements OnInit {
 
   printTime( date, format, tz = false ){
     if( tz ){
-      return moment.tz(date, 'America/Mexico_city').tz('America/Bogota').format( format )
+      return moment.tz(date, 'this._zh.defaultZone').tz('America/Bogota').format( format )
     }else{
       return moment(date).format( format )
     }

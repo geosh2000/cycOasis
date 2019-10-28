@@ -141,6 +141,7 @@ export class CotizaDayPassComponent implements OnInit {
 
   popReserve( h ){
     h['adultos'] = this.occup['adultos']
+    h['juniors'] = this.occup['juniors']
     h['menores'] = this.occup['menores']
     h['fecha'] = this.occup['fecha']
     this.rsv.emit({

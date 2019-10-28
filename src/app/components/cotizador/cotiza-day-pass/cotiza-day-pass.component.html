@@ -1,4 +1,4 @@
-<app-search-bar-cotizador (search)="search($event)" [loading]="loading['cotizar']"></app-search-bar-cotizador>
+<app-search-bar-cotizador (search)="search($event)" [paxJr]="true" [agesDispl]="false" [maxJuniors]="10" [maxMenores]="10" [loading]="loading['cotizar']"></app-search-bar-cotizador>
 <div class="container" *ngIf="results.length > 0">
     <mat-card>
         <div class="d-flex justify-content-between">
@@ -44,15 +44,24 @@
                         <mat-chip-list aria-label="Fish selection" class="m-3">
                             <mat-chip><span [style.width.px]="60"><b>Adultos</b></span></mat-chip>
                             <mat-chip color='primary' selected><span [style.width.px]="100">{{ (this._search.moneda ? h['adMXN'] : h['adUSD']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }}</span></mat-chip>
-                            <mat-chip color='warn' selected><span [style.width.px]="100">{{ ((this._search.moneda ? h['adMXN'] : h['adUSD']) / this.occup['adultos']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }} p/p</span></mat-chip>
+                            <!-- <mat-chip color='warn' selected><span [style.width.px]="100">{{ ((this._search.moneda ? h['adMXN'] : h['adUSD']) / this.occup['adultos']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }} p/p</span></mat-chip> -->
+                        </mat-chip-list>
+                        <mat-chip-list aria-label="Fish selection" class="m-3">
+                            <mat-chip><span [style.width.px]="60"><b>Juniors</b></span></mat-chip>
+                            <mat-chip color='primary' selected><span [style.width.px]="100">{{ (this._search.moneda ? h['jrMXN'] : h['jrUSD']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }}</span></mat-chip>
+                            <!-- <mat-chip color='warn' selected><span [style.width.px]="100">{{ ((this._search.moneda ? h['mnMXN'] : h['mnUSD']) / this.occup['juniors']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }} p/p</span></mat-chip> -->
                         </mat-chip-list>
                         <mat-chip-list aria-label="Fish selection" class="m-3">
                             <mat-chip><span [style.width.px]="60"><b>Menores</b></span></mat-chip>
                             <mat-chip color='primary' selected><span [style.width.px]="100">{{ (this._search.moneda ? h['mnMXN'] : h['mnUSD']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }}</span></mat-chip>
-                            <mat-chip color='warn' selected><span [style.width.px]="100">{{ ((this._search.moneda ? h['mnMXN'] : h['mnUSD']) / this.occup['menores']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }} p/p</span></mat-chip>
+                            <!-- <mat-chip color='warn' selected><span [style.width.px]="100">{{ ((this._search.moneda ? h['mnMXN'] : h['mnUSD']) / this.occup['menores']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }} p/p</span></mat-chip> -->
                         </mat-chip-list>
                     </div>
-                    <small class="text-right">* Menores de 2 años no pagan</small>
+                    <p><small class="text-right">* Adultos de 15 años en adelante (menores de 18 no se les sirve alcohol)</small></p>
+                    <p><small class="text-right">* Juniors de 11 a 14 años</small></p>
+                    <p><small class="text-right">* Menores de 4 a 10 años</small></p>
+                    <p><small class="text-right">* Menores de 4 años no pagan</small></p>
+                    <p><small class="text-right">* Penalización por hora extra de $200 MXN por persona</small></p>
                 </div>
                 <mat-action-row *ngIf="!(this._search.moneda && h['totalMXN'] == 0) && !(!this._search.moneda && h['totalUSD'] == 0)">
                     <div class="d-flex justify-content-around flex-wrap p-2">

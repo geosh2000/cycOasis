@@ -77,6 +77,11 @@
                 </mat-card>
             </div>
             <div class="container d-flex justify-content-end p-2">
+                <div class="m-1">
+                    <ui-switch size="small" name='noXld' [(ngModel)]="search['noXld']" checkedLabel='Sin Xld' uncheckedLabel='Todas'></ui-switch>
+                </div>
+            </div>
+            <div class="container d-flex justify-content-end p-2">
                 <button mat-raised-button color="primary" (click)="searchLocs()">Buscar</button>
             </div>
 

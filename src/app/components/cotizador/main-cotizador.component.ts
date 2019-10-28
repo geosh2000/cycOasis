@@ -57,6 +57,7 @@ export class MainCotizadorComponent implements OnInit {
 
   tabChg(e) {
     this.shownIndex = e;
+    console.log(e)
   }
 
   popReserve( h ){

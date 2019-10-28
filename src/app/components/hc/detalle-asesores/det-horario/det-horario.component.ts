@@ -103,7 +103,7 @@ export class DetHorarioComponent implements OnChanges {
   }
 
   formatDate(datetime, format){
-    let time = moment.tz(datetime, 'America/Mexico_City')
+    let time = moment.tz(datetime, 'this._zh.defaultZone')
     let cunTime = time.clone().tz('America/Bogota')
 
     return cunTime.format(format)

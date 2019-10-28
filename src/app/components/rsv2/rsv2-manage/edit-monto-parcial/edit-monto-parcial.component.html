@@ -96,6 +96,10 @@
                     <div class="clientInfo">{{ i['adultos'] }}</div>
                 </div>
                 <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConcept"><b>Juniors:</b></div>
+                    <div class="clientInfo">{{ i['juniors'] }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
                     <div class="productConcept"><b>Menores:</b></div>
                     <div class="clientInfo">{{ i['menores'] }}</div>
                 </div>
@@ -252,5 +256,59 @@
         </div>
     </ng-container>
     <!-- END ITEM XFER -->
+
+    <!-- START ITEM AUTO -->
+    <ng-container *ngIf="i['itemType'] == 3">
+        <div class="container row p-2">
+            <div class="col-4">
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConcept"><b>Auto:</b></div>
+                    <div class="clientInfo">{{ i['categoria'] }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConcept"><b>Dias:</b></div>
+                    <div class="clientInfo">{{ i['dias'] }}</div>
+                </div>
+
+            </div>
+            <div class="col-4">
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Inicio:</b></div>
+                    <div class="clientInfo">{{ formatDate(i['llegada'], 'DD/MM/YY') }} {{ i['hora_in'] }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Fin:</b></div>
+                    <div class="clientInfo">{{ formatDate(i['salida'], 'DD/MM/YY') }} {{ i['hora_out'] }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>PickUp:</b></div>
+                    <div class="clientInfo">{{ i['pickup'] }}</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="d-flex justify-content-start align-items-center" *ngIf="!editFlag">
+                    <div class="productConceptXL"><b>A prepagar:</b></div>
+                    <div class="clientInfo"><b class="text-success">{{ i['montoParcial'] | currency:'MXN':'symbol-narrow':'.2-2' }}</b> <button style="zoom: 0.8" mat-icon-button color='primary' (click)="editFlag = true" *ngIf="i['confirmok'] == null"><mat-icon>edit</mat-icon></button></div>
+
+                </div>
+                <div class="d-flex justify-content-start align-items-center" *ngIf="editFlag">
+                    <mat-form-field class="example-full-width">
+                        <input style="font-size: 11px" matInput placeholder="Monto a Pagar" [value]="i['isParcial'] == 1 ? i['montoParcial'] : i['monto']" #monto5>
+                    </mat-form-field>
+                    <button style="zoom: 0.8" mat-icon-button color='warn' (click)="editFlag = false" [disabled]="loading['editmonto']"><mat-icon *ngIf="!loading['editmonto']">cancel</mat-icon><span *ngIf="loading['editmonto']"><i class="fa fa-spinner fa-pulse"></i></span></button>
+                    <button style="zoom: 0.8" mat-icon-button color='primary' (click)="editMonto(monto5)" [disabled]="loading['editmonto']"><mat-icon *ngIf="!loading['editmonto']">done</mat-icon><span *ngIf="loading['editmonto']"><i class="fa fa-spinner fa-pulse"></i></span></button>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Status de pago:</b></div>
+                    <div class="clientInfo">{{ i['tipoPago'] }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Moneda:</b></div>
+                    <div class="clientInfo">{{ i['moneda'] }}</div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- END ITEM AUTO -->
 
 </div>

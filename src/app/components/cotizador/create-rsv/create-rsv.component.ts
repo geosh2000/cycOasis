@@ -204,6 +204,13 @@ export class CreateRsvComponent implements OnInit {
       h['data']['totalMXN'] = Math.round(parseFloat(h['data']['adultUSD'])* parseFloat(h['data']['tc']) * 100) / 100
       h['data']['totalUSD'] = parseFloat(h['data']['adultUSD'])
     }
+
+    if( h['tipo'] == 'tour' ){
+      h['data']['menores'] = 0
+      h['data']['adultos'] = 1
+      h['data']['totalMXN'] = Math.round(parseFloat(h['data']['adultUSD'])* parseFloat(h['data']['tc']) * 100) / 100
+      h['data']['totalUSD'] = parseFloat(h['data']['adultUSD'])
+    }
     this.all = h
     this.data = h['data']
     this.moneda = h['moneda']
@@ -271,7 +278,7 @@ export class CreateRsvComponent implements OnInit {
       }
     }
 
-    if( this.tipo == 'tour' ){
+    if( this.tipo == 'tour' || this.tipo == 'auto' ){
       if( !this.data['pickup'] || (this.data['pickup'] && this.data['pickup'] == '') ){
         return false
       }

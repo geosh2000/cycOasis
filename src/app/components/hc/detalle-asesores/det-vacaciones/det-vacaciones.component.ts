@@ -65,7 +65,7 @@ export class DetVacacionesComponent implements OnChanges {
   }
 
   printDate(date, format){
-    return date ? moment.tz(date, 'America/Mexico_city').tz('America/Bogota').format(format) : '-'
+    return date ? moment.tz(date, 'this._zh.defaultZone').tz('America/Bogota').format(format) : '-'
   }
 
   err( data ){

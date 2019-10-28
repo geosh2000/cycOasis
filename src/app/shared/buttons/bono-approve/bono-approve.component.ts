@@ -92,6 +92,6 @@ export class BonoApproveComponent implements OnInit {
   }
 
   printTime(time, format){
-    return moment.tz(time, 'America/Mexico_City').tz('America/Bogota').format(format)
+    return moment.tz(time, 'this._zh.defaultZone').tz('America/Bogota').format(format)
   }
 }

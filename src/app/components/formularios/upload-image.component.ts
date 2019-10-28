@@ -17,10 +17,12 @@ export class UploadImageComponent implements OnChanges {
   @Input() dir:any
   @Output() loadResult = new EventEmitter<any>()
 
-  title:string
-  invalidForm:boolean = true
+  type = 'img'
 
-  previewSrc:boolean = false
+  title:string
+  invalidForm = true
+
+  previewSrc = false
 
   imageForm: FormGroup
   imageFileUp: File
@@ -46,19 +48,20 @@ export class UploadImageComponent implements OnChanges {
     }
   }
 
-  build( title, dir, name, open = true ){
+  build( title, dir, name, open = true, t = 'img' ){
+    this.type = t
     if( open ){
-      jQuery("#formUploadImageComponent").modal('show')
+      jQuery('#formUploadImageComponent').modal('show')
     }
     this.title = title
     this.imageForm.controls['fname'].setValue(name)
     this.imageForm.controls['dir'].setValue(dir)
-    jQuery("#formUploadImage").val('')
-    jQuery("#formUploadImagePreview").attr('src','')
+    jQuery('#formUploadImage').val('')
+    jQuery('#formUploadImagePreview').attr('src','')
     this.previewSrc = false
   }
 
-  submit(){
+  submit( t = this.type){
     let Image = this.image_File.nativeElement
 
     if( Image.files && Image.files[0] ){
@@ -72,11 +75,22 @@ export class UploadImageComponent implements OnChanges {
     formData.append( 'dir',   this.imageForm.controls['dir'].value)
     formData.append( 'image', ImageFile, ImageFile.name)
 
-    this._api.restfulImgPost( formData, 'UploadImage/uploadImage' )
+    let url = ''
+
+    switch(t){
+      case 'img':
+        url = 'UploadImage/uploadImage'
+        break
+      case 'voucher':
+        url = 'UploadImage/voucher'
+        break
+    }
+
+    this._api.restfulImgPost( formData, url )
             .subscribe( res => {
 
               if( !res['ERR'] ){
-                jQuery("#formUploadImageComponent").modal('hide')
+                jQuery('#formUploadImageComponent').modal('hide')
               }
 
               this.loadResult.emit( res )
@@ -95,29 +109,29 @@ export class UploadImageComponent implements OnChanges {
   readImg( file ){
 
     if(file.files && file.files[0]){
-      console.log("Imagen cargada")
+      console.log('Imagen cargada')
 
       let reader = new FileReader();
-      reader.onload = function(e){
-        jQuery("#formUploadImagePreview").attr('src', e.target['result'])
+      reader.onload = (e) => {
+        jQuery('#formUploadImagePreview').attr('src', e.target['result'])
       }
       this.previewSrc = true
       reader.readAsDataURL(file.files[0])
     }else{
       this.previewSrc = false
-      console.error("No existe ninguna imagen cargada")
+      console.error('No existe ninguna imagen cargada')
     }
   }
 
-  imageExists( dir, fname, ext ){
-    this._api.restfulGet( `${ dir }/${ fname }/jpg`, 'UploadImage/fileExists')
+  imageExists( dir, fname, ext = 'jpg' ){
+    this._api.restfulGet( `${ dir }/${ fname }/${ext}`, 'UploadImage/fileExists')
             .subscribe( res => {
               return res
             })
   }
 
-  deleteFile( dir, fname, ext ){
-    this._api.restfulDelete( `${ dir }/${ fname }/jpg`, 'UploadImage/imageDel')
+  deleteFile( dir, fname, ext = 'jpg' ){
+    this._api.restfulDelete( `${ dir }/${ fname }/${ext}`, 'UploadImage/imageDel')
             .subscribe( res => {
               return res
             })

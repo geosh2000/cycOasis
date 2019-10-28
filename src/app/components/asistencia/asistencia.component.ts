@@ -291,8 +291,8 @@ export class AsistenciaComponent implements OnInit {
   }
 
   printTimeInterval(date, start, end){
-    let inicio =    moment.tz(`${date} ${start}`, 'America/Mexico_City')
-    let fin =       moment.tz(`${date} ${end}`, 'America/Mexico_City')
+    let inicio =    moment.tz(`${date} ${start}`, 'this._zh.defaultZone')
+    let fin =       moment.tz(`${date} ${end}`, 'this._zh.defaultZone')
     let inicioCUN = inicio.clone().tz('America/Bogota')
     let finCUN =    fin.clone().tz('America/Bogota')
 
@@ -302,7 +302,7 @@ export class AsistenciaComponent implements OnInit {
   }
 
   printTime(date, time){
-    let tiempo =    moment.tz(`${date} ${time}`, 'America/Mexico_City')
+    let tiempo =    moment.tz(`${date} ${time}`, 'this._zh.defaultZone')
     let tiempoCUN =    tiempo.clone().tz('America/Bogota')
 
     let result = tiempoCUN.format('HH:mm:ss')
@@ -311,7 +311,7 @@ export class AsistenciaComponent implements OnInit {
   }
 
   formatDate(datetime, format){
-    let time = moment.tz(datetime, 'America/Mexico_City')
+    let time = moment.tz(datetime, 'this._zh.defaultZone')
     let cunTime = time.clone().tz('America/Bogota')
 
     return cunTime.format(format)

@@ -67,7 +67,7 @@ export class LogoutComponent implements OnInit {
   }
 
   printDate( input, format ){
-    return moment.tz(input,'America/Mexico_city').tz( this._zh.zone ).format(format)
+    return moment.tz(input,'this._zh.defaultZone').tz( this._zh.zone ).format(format)
   }
 
   logout( id ){
