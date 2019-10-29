@@ -22,7 +22,7 @@
             <div class="form-group p-1" *ngIf="timepicker">
                 <label for="horaInicio">Hora Inicio</label>
                 <div class="input-group">
-                    <input class="form-control" [format]="24" [disabled]="this.inicio == null" placeholder="12:00 hrs" [ngxTimepicker]="pickerStart" id='horaInicio' autocomplete="off" [style.width.px]="110">
+                    <input class="form-control" [min]="minHS" [max]="maxHS" [format]="24" [disabled]="this.inicio == null" placeholder="12:00 hrs" [ngxTimepicker]="pickerStart" id='horaInicio' autocomplete="off" [style.width.px]="110">
                     <ngx-material-timepicker [enableKeyboardInput]="true" minutesGap="5" (timeSet)="setTimePicker($event, true, horaInicio)" #pickerStart></ngx-material-timepicker>
                     <div class="input-group-append">
                         <div class="input-group-text"><i class="fa fa-calendar fa-fw"></i></div>
@@ -41,7 +41,7 @@
             <div class="form-group p-1" *ngIf="endDateSep && timepicker">
                 <label for="horaFin">Hora Fin</label>
                 <div class="input-group">
-                    <input class="form-control" [format]="24" [disabled]="this.fin == null" placeholder="12:00 hrs" [ngxTimepicker]="picker" id='horaFin' autocomplete="off" [style.width.px]="110">
+                    <input class="form-control" [min]="minHE" [max]="maxHE" [format]="24" [disabled]="this.fin == null" placeholder="12:00 hrs" [ngxTimepicker]="picker" id='horaFin' autocomplete="off" [style.width.px]="110">
                     <ngx-material-timepicker [enableKeyboardInput]="true" minutesGap="5" (timeSet)="setTimePicker($event, false, horaFin)" #picker></ngx-material-timepicker>
                     <div class="input-group-append">
                         <div class="input-group-text"><i class="fa fa-calendar fa-fw"></i></div>

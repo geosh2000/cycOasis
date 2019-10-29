@@ -126,7 +126,8 @@ export class RsvListComponent implements OnInit {
   data:any = []
 
   search:Object = {
-    searchString: ''
+    searchString: '',
+    noXld: false
   }
 
   hoveredDate: NgbDateStruct;

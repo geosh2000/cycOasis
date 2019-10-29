@@ -1,4 +1,4 @@
-<app-search-bar-cotizador (search)="search($event)" [minDate]="minDate" [endDateSep]="true" [timepicker]="true" [isCode]="true" [pax]="false" [groupsTfa]="groupsTfa" [loading]="loading['cotizar']"></app-search-bar-cotizador>
+<app-search-bar-cotizador (search)="search($event)" minHS="08:00 am" maxHS="05:00 pm" minHE="08:00 am" maxHE="05:00 pm" [minDate]="minDate" [endDateSep]="true" [timepicker]="true" [isCode]="true" [pax]="false" [groupsTfa]="groupsTfa" [loading]="loading['cotizar']"></app-search-bar-cotizador>
 <div class="container d-flex justify-content-between flex-wrap p-2" *ngIf="!loading['cotizar'] && flag">
     <mat-card class="tour-card m-2" *ngFor="let t of results">
         <mat-card-header>

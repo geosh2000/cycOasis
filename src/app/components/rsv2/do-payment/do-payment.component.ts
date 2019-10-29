@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { ApiService, InitService, TokenCheckService } from '../../../services/service.index';
+import { ApiService, InitService, TokenCheckService, ZonaHorariaService } from '../../../services/service.index';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 declare var jQuery: any;
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-do-payment',
@@ -31,6 +32,7 @@ export class DoPaymentComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               public _api: ApiService,
               public _init: InitService,
+              private _zh:ZonaHorariaService,
               public toastr: ToastrService) { }
 
   ngOnInit() {
@@ -258,5 +260,13 @@ export class DoPaymentComponent implements OnInit {
     this.itms = []
     s.reset()
     jQuery('#doPayment').modal('hide')
+  }
+
+  isVigente( d ){
+    if( moment.tz(d,this._zh.defaultZone).tz(this._zh.zone) > moment() ){
+      return true
+    }
+
+    return false
   }
 }

@@ -303,6 +303,20 @@
                     <div class="clientInfo">{{ data['items'][0]['montoPagado'] == data['items'][0]['monto'] ? 'Pagado 100%' : 'Saldo Pendiente' }}</div>
                 </div>
                 <div class="d-flex justify-content-start align-items-center">
+                    <div class="clientConcept"><b>Cuenta:</b></div>
+                    <div class="clientInfo">
+                        <span *ngIf="data['payments'][0]['complejo'] == 'Vcm'">VCM</span>
+                        <span *ngIf="data['payments'][0]['complejo'] != 'Vcm'" class="text-danger"><b>Cargo a Oasis ({{ data['payments'][0]['complejo'] ? data['items'][0]['complejo'] : data['items'][0]['hotel'] }})</b></span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="clientConcept"><b>Venta:</b></div>
+                    <div class="clientInfo">
+                        <span *ngIf="data['items'][0]['isFree'] == 1">Cortesía</span>
+                        <span *ngIf="data['items'][0]['isFree'] == 0">Venta prepagada</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
                     <div class="clientConcept"><b>Pagos:</b></div>
                     <div class="clientInfo"><button mat-button color="primary" data-toggle="modal" data-target="#vouchers">Ver {{ data['payments'].length }} Vouchers</button></div>
                 </div>

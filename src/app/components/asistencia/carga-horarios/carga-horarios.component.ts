@@ -43,7 +43,7 @@ import { NgForm } from '@angular/forms';
 })
 export class CargaHorariosComponent implements OnInit {
 
-  @ViewChild(ContextMenuComponent,{static:false}) public basicMenu: ContextMenuComponent;
+  @ViewChild(ContextMenuComponent, {static:false}) public basicMenu: ContextMenuComponent;
 
   mainCredential: any = 'sch'
   showContents: boolean;
@@ -74,7 +74,7 @@ export class CargaHorariosComponent implements OnInit {
   listDates:any
 
   zhs:any = []
-  zone:any = 'America/Bogota'
+  zone:any = 'America/Mexico_city'
   zoneIdx:any = 0
   zoneMap:Object = {}
 
@@ -279,7 +279,7 @@ export class CargaHorariosComponent implements OnInit {
   }
 
   printMoment( val, format, header = false ){
-    return moment.tz(header ? `${val} 12:00:00` : val, 'America/Bogota').tz(this.zone).format(format)
+    return moment.tz(header ? `${val} 12:00:00` : val, 'America/Mexico_city').tz(this.zone).format(format)
   }
 
   selectH( asesor, date, skip = false ){
@@ -316,7 +316,7 @@ export class CargaHorariosComponent implements OnInit {
     let m = moment.tz(this.listScheds[item['asesor']][item['date']]['data'][field], this.zone)
     // if( this.horaCun ){
       if( this.listScheds[item['asesor']][item['date']]['data'][field] != null ){
-        this.listScheds[item['asesor']][item['date']]['data'][field] = tz ? m.tz('America/Bogota').format('YYYY-MM-DD HH:mm:ss') : m.format('YYYY-MM-DD HH:mm:ss')
+        this.listScheds[item['asesor']][item['date']]['data'][field] = tz ? m.tz('America/Mexico_city').format('YYYY-MM-DD HH:mm:ss') : m.format('YYYY-MM-DD HH:mm:ss')
       }
     // }
   }
@@ -327,11 +327,11 @@ export class CargaHorariosComponent implements OnInit {
     for( let item of arr ){
 
       // if( i ){
-      //   i = moment.tz(`${item['date']} ${i}:00`, this.zone).tz('America/Bogota').format('HH:mm')
+      //   i = moment.tz(`${item['date']} ${i}:00`, this.zone).tz('America/Mexico_city').format('HH:mm')
       //   // `${ moment(`${item['date']} ${i}:00`) > moment(`${item['date']} ${e}:00`) ? moment(item['date']).add(1,'days').format('YYYY-MM-DD') : item['date']} ${e}:00`
       // }
       // if( e ){
-      //   e = moment.tz(`${ moment(`${item['date']} ${i}:00`) > moment(`${item['date']} ${e}:00`) ? moment(item['date']).add(1,'days').format('YYYY-MM-DD') : item['date']} ${e}:00`, this.zone).tz('America/Bogota').format('HH:mm')
+      //   e = moment.tz(`${ moment(`${item['date']} ${i}:00`) > moment(`${item['date']} ${e}:00`) ? moment(item['date']).add(1,'days').format('YYYY-MM-DD') : item['date']} ${e}:00`, this.zone).tz('America/Mexico_city').format('HH:mm')
       // }
 
       switch( type ){
@@ -482,14 +482,14 @@ export class CargaHorariosComponent implements OnInit {
     this.tmpArr = arr
 
     if( this.runCompare(arr) ){
-      form.controls['i'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['js'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['js'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
-      form.controls['e'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['je'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['je'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
-      form.controls['x1i'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1s'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1s'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
-      form.controls['x1e'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1e'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1e'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
-      form.controls['x2i'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2s'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2s'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
-      form.controls['x2e'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2e'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2e'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
-      form.controls['ci'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['cs'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['cs'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
-      form.controls['ce'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['ce'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['ce'], 'America/Bogota').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['i'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['js'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['js'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['e'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['je'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['je'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['x1i'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1s'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1s'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['x1e'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1e'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x1e'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['x2i'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2s'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2s'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['x2e'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2e'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['x2e'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['ci'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['cs'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['cs'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
+      form.controls['ce'].setValue( this.listScheds[arr[0]['asesor']][arr[0]['date']]['data'] && this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['ce'] ? moment( moment.tz(this.listScheds[arr[0]['asesor']][arr[0]['date']]['data']['ce'], 'America/Mexico_city').tz(this.zone).format('YYYY-MM-DD HH:mm:ss')).format('HH:mm') : null)
     }
     jQuery('#editHorario').modal('show')
   }
@@ -798,10 +798,6 @@ export class CargaHorariosComponent implements OnInit {
     this.listScheds[asesor][item]['change'] = true
     console.log(val)
     console.log(this.listScheds[asesor][item]['data'])
-  }
-
-  toastrCheck(){
-    this.toastr.success('TEST','TEST')
   }
 
 }

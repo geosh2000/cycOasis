@@ -124,6 +124,10 @@ export class SearchBarCotizadorComponent implements OnInit {
   @Input() maxAdultos = 50
   @Input() maxMenores = 3
   @Input() maxJuniors = 3
+  @Input() minHS = '12:00 am'
+  @Input() minHE = '11:59 pm'
+  @Input() maxHS = '12:00 am'
+  @Input() maxHE = '11:59 pm'
   @Input() agesDispl = true
   @Input() minDate:NgbDateStruct = {
     day: parseInt(moment().add(1, 'days').format('DD')),

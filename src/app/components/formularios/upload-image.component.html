@@ -28,8 +28,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="invalidForm">Subir Archivo</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="loading">Close</button>
+                <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="invalidForm || loading">Subir Archivo <span *ngIf="loading"><i class="fas fa-spinner fa-pulse"></i></span></button>
             </div>
         </div>
     </div>

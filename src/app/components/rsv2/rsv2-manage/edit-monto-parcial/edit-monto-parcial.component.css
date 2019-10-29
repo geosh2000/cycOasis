@@ -89,3 +89,7 @@
     color: grey;
     font-size: 12px;
 }
+
+.example-full-width {
+    width: 130px;
+}

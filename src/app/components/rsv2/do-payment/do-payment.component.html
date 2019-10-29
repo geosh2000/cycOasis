@@ -80,7 +80,7 @@
                         </div>
                         <mat-list class="container" #shoes>
                             <ng-container *ngFor="let i of itms">
-                                <ng-container *ngIf="i['moneda'] == accMon">
+                                <ng-container *ngIf="i['moneda'] == accMon && isVigente(i['vigencia'])">
                                     <!-- <mat-list-item *ngIf="i['montoPagado'] <= i['monto'] && i['moneda'] == accMon"> -->
                                     <div class="container row rowItem align-items-center">
 

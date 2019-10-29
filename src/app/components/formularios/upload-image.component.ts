@@ -21,6 +21,7 @@ export class UploadImageComponent implements OnChanges {
 
   title:string
   invalidForm = true
+  loading = false
 
   previewSrc = false
 
@@ -62,6 +63,7 @@ export class UploadImageComponent implements OnChanges {
   }
 
   submit( t = this.type){
+    this.loading = true
     let Image = this.image_File.nativeElement
 
     if( Image.files && Image.files[0] ){
@@ -88,7 +90,7 @@ export class UploadImageComponent implements OnChanges {
 
     this._api.restfulImgPost( formData, url )
             .subscribe( res => {
-
+              this.loading = false
               if( !res['ERR'] ){
                 jQuery('#formUploadImageComponent').modal('hide')
               }

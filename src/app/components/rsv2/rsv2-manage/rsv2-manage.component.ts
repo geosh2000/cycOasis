@@ -12,6 +12,8 @@ import * as moment from 'moment-timezone';
 import * as Globals from '../../../globals';
 import { OrderPipe } from 'ngx-order-pipe';
 import { DoPaymentComponent } from '../do-payment/do-payment.component';
+import { UploadImageComponent } from 'src/app/components/formularios/upload-image.component';
+import { ZonaHorariaService } from '../../../services/zona-horaria.service';
 
 @Component({
   selector: 'app-rsv2-manage',
@@ -21,6 +23,7 @@ import { DoPaymentComponent } from '../do-payment/do-payment.component';
 export class Rsv2ManageComponent implements OnInit {
 
   @ViewChild(DoPaymentComponent, {static:false}) _payment:DoPaymentComponent
+  @ViewChild(UploadImageComponent, {static: false}) _upl:UploadImageComponent
 
   currentUser: any;
   showContents = false;
@@ -54,6 +57,7 @@ export class Rsv2ManageComponent implements OnInit {
               private _tokenCheck: TokenCheckService,
               private route: Router,
               private orderPipe: OrderPipe,
+              private _zh:ZonaHorariaService,
               private activatedRoute: ActivatedRoute,
               public toastr: ToastrService) {
 
@@ -169,11 +173,27 @@ export class Rsv2ManageComponent implements OnInit {
     this.route.navigateByUrl(`/rsv2/${e['masterlocatorid']}`);
   }
 
-  formatDate( d, f ){
-    return moment(d).format(f)
+  formatDate( d, f, z = false ){
+    if( z ){
+      return moment.tz(d,this._zh.defaultZone).tz(this._zh.zone).format(f)
+    }else{
+      return moment(d).format(f)
+    }
   }
 
-  colorConfirm( i ){
+  isVigente( d ){
+    if( moment.tz(d,this._zh.defaultZone).tz(this._zh.zone) > moment() ){
+      return true
+    }
+
+    return false
+  }
+
+  colorConfirm( i, v = true, q = false ){
+    if( !v && q){
+      return 'text-danger'
+    }
+
     switch( i ){
       case 'Cancelada':
         return 'text-danger'
@@ -303,6 +323,19 @@ export class Rsv2ManageComponent implements OnInit {
                   console.error(err.statusText, error.msg);
 
                 });
+  }
+
+  uplImg(i){
+    this._upl.build('Voucher '+ i['itemLocatorId'], i['itemLocatorId'], 'voucher_'+i['itemLocatorId'], true, 'voucher')
+  }
+
+  imgLoaded( e ){
+    if( !e.ERR ){
+      this.toastr.success(e.msg, 'Cargado')
+      this.getHistory()
+    }else{
+      this.toastr.error(e.msg, 'ERROR!')
+    }
   }
 
 }

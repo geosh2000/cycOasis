@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 
 import * as moment from 'moment-timezone';
+import * as Globals from '../../../../globals';
 import { ApiService } from 'src/app/services/service.index';
 import { ToastrService } from 'ngx-toastr';
+import { UploadImageComponent } from 'src/app/components/formularios/upload-image.component';
 
 @Component({
   selector: 'app-edit-monto-parcial',
@@ -13,9 +15,12 @@ export class EditMontoParcialComponent implements OnInit {
 
   @Input() i:Object = {}
   @Output() saveMonto = new EventEmitter()
+  @Output() uplImg = new EventEmitter()
 
   editFlag = false
   loading:Object = {}
+  hrIndex = Globals.HREF
+  sfFlag = false
 
   constructor(public _api: ApiService,
               public toastr: ToastrService) { }
@@ -60,6 +65,30 @@ export class EditMontoParcialComponent implements OnInit {
                   this.i['montoParcial'] = e['new']['montoParcial']
                   this.saveMonto.emit( res['data'] )
                   this.editFlag = false
+
+                }, err => {
+                  this.loading['editMonto'] = false;
+
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
+  }
+
+  setFree(i, v){
+    this.loading['editMonto'] = true
+
+    this._api.restfulPut( {item: i, relates: v.value}, 'Rsv/setFree' )
+                .subscribe( res => {
+
+                  this.loading['editMonto'] = false;
+                  this.i['isFree'] = 1
+                  this.i['isQuote'] = 0
+                  this.i['montoPagado'] = this.i['monto']
+                  this.saveMonto.emit( res['data'] )
+                  this.editFlag = false
+                  this.sfFlag = false
 
                 }, err => {
                   this.loading['editMonto'] = false;

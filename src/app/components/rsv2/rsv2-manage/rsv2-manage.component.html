@@ -57,7 +57,7 @@
                     </div>
                     <hr class="hrItems">
                     <mat-accordion>
-                        <mat-expansion-panel *ngFor="let i of data['items']" [disabled]="i['isCancel'] == 1">
+                        <mat-expansion-panel *ngFor="let i of data['items']">
                             <mat-expansion-panel-header>
                                 <div class="container row rowItem">
                                     <div class="col-4 text-truncate" [matTooltip]="i['tipoServicio']" matTooltipPosition="above">
@@ -67,11 +67,11 @@
                                         </button>
                                     </div>
                                     <ng-container *ngIf="i['isCancel'] == 0">
-                                        <div class="col-2 mt-auto mb-auto text-center text-truncate p-0" [ngClass]="colorConfirm(i['confirm'])" [matTooltip]="i['confirm']" [matTooltipPosition]="'above'">
+                                        <div class="col-2 mt-auto mb-auto text-center text-truncate p-0" [ngClass]="colorConfirm(i['confirm'], isVigente(i['vigencia']), i['isQuote'] == 1)" [matTooltip]="i['confirm']" [matTooltipPosition]="'above'">
                                             <span class="badge badge-pill badge-success" *ngIf="i['tipoPago'] == 'PT'">PT</span>
                                             <span class="badge badge-pill badge-info" *ngIf="i['tipoPago'] == 'PP'">PP</span>
                                             <span class="badge badge-pill badge-primary" *ngIf="i['tipoPago'] == 'PH'">PH</span>
-                                            <span class="badge badge-pill badge-alert" *ngIf="i['tipoPago'] == 'PDT'">PDT</span> {{ i['confirm'] }}
+                                            <span class="badge badge-pill badge-alert" *ngIf="i['tipoPago'] == 'PDT'">PDT</span> {{ i['isQuote'] == 1 && !isVigente(i['vigencia']) ? 'Expirada' : i['confirm'] }}
                                         </div>
                                         <div class="col-2 mt-auto mb-auto text-right">{{ i['monto'] | currency:'MXN':'symbol-narrow':'.2-2' }}</div>
                                         <div class="col-4 mt-auto mb-auto text-right row">
@@ -83,12 +83,19 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="i['isCancel'] == 1">
-                                        <div class="col-8 mt-auto mb-auto text-center itemCancelled">Item Cancelado</div>
+                                        <div class="col-8 mt-auto mb-auto text-center itemCancelled">Item Cancelado conf. {{ i['confirmCancel'] ? i['confirmCancel'] : 'Pendiente' }}</div>
                                     </ng-container>
                                 </div>
                             </mat-expansion-panel-header>
 
-                            <app-edit-monto-parcial [i]="i" (saveMonto)="saveMonto( $event )"></app-edit-monto-parcial>
+                            <div class="alert" [ngClass]="{'alert-danger': !isVigente(i['vigencia']), 'alert-warning': isVigente(i['vigencia'])}" role="alert" *ngIf="i['isQuote'] == 1">
+                                <span *ngIf="isVigente(i['vigencia'])">Cotización expira el {{ formatDate(i['vigencia'], 'DD MMM YYYY HH:mm', true) }} hrs</span>
+                                <span *ngIf="!isVigente(i['vigencia'])">Cotización expirada. Venció el {{ formatDate(i['vigencia'], 'DD MMM YYYY HH:mm', true) }} hrs</span>
+                            </div>
+                            <div class="alert alert-info" role="alert" *ngIf="i['isFree'] == 1">
+                                Item marcado como cortesía, relacionado con reservas {{ i['cieloRelates'] }}
+                            </div>
+                            <app-edit-monto-parcial [i]="i" (saveMonto)="saveMonto( $event )" (uplImg)="uplImg($event)"></app-edit-monto-parcial>
                             <div class="container d-flex justify-content-end">
                                 <div class="mr-auto"><span class="productConceptXL">Notas: </span><span class="clientInfo">{{ i['notas'] }}</span></div>
                                 <button class='p-1' mat-button style="zoom: 0.8" color="danger" (click)="cancelItem(i)"><mat-icon>remove_circle</mat-icon> Cancelar</button>
@@ -260,3 +267,7 @@
 <!-- ====================== MODAL DE PAGO ====================== -->
 <app-do-payment (paid)="paid($event)"></app-do-payment>
 <!-- ====================== FIN MODAL DE PAGO ====================== -->
+
+<!-- ====================== MODAL DE VOUCHER ====================== -->
+<app-upload-image (loadResult)="imgLoaded($event)"></app-upload-image>
+<!-- ====================== FIN MODAL DE VOUCHER ====================== -->
