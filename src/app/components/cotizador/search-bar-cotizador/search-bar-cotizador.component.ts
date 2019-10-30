@@ -111,6 +111,7 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<any> {
 export class SearchBarCotizadorComponent implements OnInit {
 
   @Output() search = new EventEmitter<any>()
+  @Input() isDate = true
   @Input() loading = false
   @Input() local = false
   @Input() group = false

@@ -26,7 +26,10 @@
                         <ng-container *ngIf="!(this._search.moneda && h['totalMXN'] == 0) && !(!this._search.moneda && h['totalUSD'] == 0)">
                             <div>
                                 <div class="d-flex justify-content-end">
+                                    <div [style.width.px]="110" class='text-right pl-3' style="text-decoration:line-through">{{ (this._search.moneda ? h['totalMXN'] / (1 - h['disc'] ) : h['totalUSD'] / (1 - h['disc'] )) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }}</div>
+                                    <div [style.width.px]="45" class='text-right pl-3 text-success font-weight-bold'>{{ h['disc'] | percent:'.0-0' }}</div>
                                     <div [style.width.px]="130" class="text-right text-success pl-3 font-weight-bold">
+
                                         <mat-chip-list aria-label="Fish selection">
                                             <mat-chip color='primary' selected><span [style.width.px]="120">{{ (this._search.moneda ? h['totalMXN'] : h['totalUSD']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }}</span></mat-chip>
                                         </mat-chip-list>
@@ -57,6 +60,7 @@
                             <!-- <mat-chip color='warn' selected><span [style.width.px]="100">{{ ((this._search.moneda ? h['mnMXN'] : h['mnUSD']) / this.occup['menores']) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }} p/p</span></mat-chip> -->
                         </mat-chip-list>
                     </div>
+                    <p><small class="text-right">* {{ h['descripcion'] }}</small></p>
                     <p><small class="text-right">* Adultos de 15 años en adelante (menores de 18 no se les sirve alcohol)</small></p>
                     <p><small class="text-right">* Juniors de 11 a 14 años</small></p>
                     <p><small class="text-right">* Menores de 4 a 10 años</small></p>

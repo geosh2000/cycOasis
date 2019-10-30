@@ -205,12 +205,13 @@ export class CreateRsvComponent implements OnInit {
       h['data']['totalUSD'] = parseFloat(h['data']['adultUSD'])
     }
 
-    if( h['tipo'] == 'tour' ){
+    if( h['tipo'] == 'concert' ){
       h['data']['menores'] = 0
       h['data']['adultos'] = 1
-      h['data']['totalMXN'] = Math.round(parseFloat(h['data']['adultUSD'])* parseFloat(h['data']['tc']) * 100) / 100
+      h['data']['totalMXN'] = parseFloat(h['data']['adultMXN'])
       h['data']['totalUSD'] = parseFloat(h['data']['adultUSD'])
     }
+
     this.all = h
     this.data = h['data']
     this.moneda = h['moneda']
@@ -243,7 +244,16 @@ export class CreateRsvComponent implements OnInit {
     }else{
       this.data['totalUSD'] = Math.round(((parseFloat(this.data['adultUSD']) * a) + (parseFloat(this.data['menorUSD']) * m)) * 100) / 100
     }
-    this.data['totalMXN'] = Math.round(this.data['totalUSD'] * this.data['tc'] * 100) / 100
+
+    if( this.tipo == 'concert' ){
+      if( this.data['menorMXN'] == null){
+        this.data['totalMXN'] = Math.round(((parseFloat(this.data['adultMXN']) * a)) * 100) / 100
+      }else{
+        this.data['totalMXN'] = Math.round(((parseFloat(this.data['adultMXN']) * a) + (parseFloat(this.data['menorMXN']) * m)) * 100) / 100
+      }
+    }else{
+      this.data['totalMXN'] = Math.round(this.data['totalUSD'] * this.data['tc'] * 100) / 100
+    }
 
   }
 

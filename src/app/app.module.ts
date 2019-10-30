@@ -170,6 +170,8 @@ import { CotizaTourComponent } from './components/cotizador/cotiza-tour/cotiza-t
 import { ExtranetListComponent } from './components/extranet/extranet-list/extranet-list.component';
 import { CotizaAutoComponent } from './components/cotizador/cotiza-auto/cotiza-auto.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { CotizaXtrasComponent } from './components/cotizador/cotiza-xtras/cotiza-xtras.component';
+import { CotizaConcertComponent } from './components/cotizador/cotiza-concert/cotiza-concert.component';
 
 @NgModule({
   declarations: [
@@ -278,7 +280,9 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     ExtPapeletaComponent,
     CotizaTourComponent,
     ExtranetListComponent,
-    CotizaAutoComponent
+    CotizaAutoComponent,
+    CotizaXtrasComponent,
+    CotizaConcertComponent
 
   ],
   imports: [

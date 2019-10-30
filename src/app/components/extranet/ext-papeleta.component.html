@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <hr class="hrItems">
-                    <div class="container d-flex justify-content-lg-between p-2 align-items-center ml-auto mr-auto">
+                    <div class="container d-flex justify-content-lg-between p-2 align-items-center ml-auto mr-auto" *ngIf="data['items'][0]['tipoServicio'] != 'Auto'">
                         <div class="rowTitle">
                             <p class="rowTitleTxt" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}">PAX: </p>
                         </div>
@@ -81,7 +81,7 @@
                                 <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['menores'] }}</b></p>
                             </div>
                             <div class="m-1 text-center " *ngIf="data['items'][0]['Servicio'] != 'DayPass'">
-                                <p class="colTitle">{{data['items'][0]['Servicio']}}</p>
+                                <p class="colTitle">Infantes</p>
                                 <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['infantes'] }}</b></p>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                                         <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['pickup'] }}</b></p>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="data['items'][0]['Servicio'] == 'Traslados'">
+                                <ng-container *ngIf="data['items'][0]['Servicio'] == 'Traslados' || data['items'][0]['tipoServicio'] == 'Auto'">
                                     <div class="m-1 text-center ">
                                         <p class="colTitle">Fecha Llegada</p>
                                         <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
@@ -121,9 +121,15 @@
                                         <p class="colTitle">Hora Llegada</p>
                                         <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['hora_in'] }} hrs.</b></p>
                                     </div>
-                                    <div class="m-1 text-center ">
+                                    <div class="m-1 text-center " *ngIf="data['items'][0]['Servicio'] == 'Traslados'">
                                         <p class="colTitle">Vuelo Llegada</p>
                                         <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['vuelo_in'] }}</b></p>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="data['items'][0]['tipoServicio'] == 'Concierto'">
+                                    <div class="m-1 text-center ">
+                                        <p class="colTitle">Fecha Concierto</p>
+                                        <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ formatDate(data['items'][0]['llegada'], 'ddd DD MMM YYYY') }}</b></p>
                                     </div>
                                 </ng-container>
                             </div>
@@ -158,7 +164,7 @@
                                     <p class="colTitle">Hora Salida</p>
                                     <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['hora_out'] }} hrs.</b></p>
                                 </div>
-                                <div class="m-1 text-center ">
+                                <div class="m-1 text-center " *ngIf="data['items'][0]['Servicio'] == 'Traslados'">
                                     <p class="colTitle">Vuelo Salida</p>
                                     <p class="colData" [ngClass]="{'textXld': data['items'][0]['isCancel'] == '1'}"><b>{{ data['items'][0]['vuelo_out'] }}</b></p>
                                 </div>

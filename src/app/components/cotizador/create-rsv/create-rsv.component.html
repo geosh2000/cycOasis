@@ -319,6 +319,52 @@
                     </div>
                 </div>
                 <!-- END RSV TOUR -->
+
+                <!-- BEGIN RSV CONCERT -->
+                <div class="p-2" *ngIf="!searchUserFlag && tipo == 'concert'">
+                    <div class="d-flex justify-content-center p-2">
+                        <div class="p-2">
+                            <h5>
+                                {{ data['titulo'] }} Fecha: {{ printDate(data['fecha'], 'ddd DD MMM \'YY') }} por <span class="text-primary">{{ (moneda ? data['totalMXN'] : data['totalUSD']) | currency:(moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }} {{ moneda ? 'MXN' : 'USD' }}</span>
+                            </h5>
+                        </div>
+
+                    </div>
+
+                    <div class="form d-flex justify-content-center pr-3">
+                        <div class="form-group p-1">
+                            <label for="adultos">Adultos</label>
+                            <div class="input-group">
+                                <input (change)="calcTotal($event, 'adult')" type="number" min=0 max=10 step=1 class="form-control" id="adultos" [(ngModel)]="data['adultos']" id="adultos" name="adultos" autocomplete="off" [style.width.px]="70">
+                                <div class="input-group-append">
+                                    <div class="input-group-text"><i class="fas fa-male"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group p-1">
+                            <label for="menores">Menores</label>
+                            <div class="input-group">
+                                <input (change)="calcTotal($event, 'menor')" type="number" min=0 max=10 step=1 class="form-control" id="menores" [(ngModel)]="data['menores']" id="menores" name="menores" autocomplete="off" [style.width.px]="70" [readonly]="data['menorUSD'] == null">
+                                <div class="input-group-append">
+                                    <div class="input-group-text"><i class="fas fa-child"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="justify-content-end d-flex">
+                        <small>** Menores: {{ data['menorUSD'] == null ? 'No se aceptan' : data['descripMenores'] }}</small>
+                    </div>
+                    <div class="form d-flex justify-content-center pr-3">
+                        <div class="form-group p-1">
+                            <label for="fechas">Notas (opcional)</label>
+                            <div class="input-group">
+                                <textarea rows="5" cols="120" [(ngModel)]="data['notasOperador']" placeholder="Notas para el operador" id="notas"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END RSV CONCERT -->
             </div>
             <!-- <pre>{{ data | json}}</pre> -->
             <!-- BEGIN BOTONES COTIZACION Y RESERVA -->

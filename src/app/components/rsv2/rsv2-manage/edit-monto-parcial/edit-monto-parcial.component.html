@@ -333,6 +333,55 @@
     </ng-container>
     <!-- END ITEM AUTO -->
 
+    <!-- START ITEM CONCIERTO -->
+    <ng-container *ngIf="i['itemType'] == 9">
+        <div class="container row p-2">
+            <div class="col-4">
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConcept"><b>Concierto:</b></div>
+                    <div class="clientInfo">{{ i['categoria'] }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConcept"><b>Categoria:</b></div>
+                    <div class="clientInfo">{{ i['hotel'] }}</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Fecha:</b></div>
+                    <div class="clientInfo">{{ formatDate(i['llegada'], 'DD/MM/YY') }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Pax:</b></div>
+                    <div class="clientInfo">{{ i['adultos'] }}</div>
+                </div>
+            </div>
+            <div class="col-4" *ngIf="i['isCancel'] != 1">
+                <div class="d-flex justify-content-start align-items-center" *ngIf="!editFlag">
+                    <div class="productConceptXL"><b>A prepagar:</b></div>
+                    <div class="clientInfo"><b class="text-success">{{ i['montoParcial'] | currency:'MXN':'symbol-narrow':'.2-2' }}</b> <button style="zoom: 0.8" mat-icon-button color='primary' (click)="editFlag = true" *ngIf="i['confirmok'] == null"><mat-icon>edit</mat-icon></button></div>
+
+                </div>
+                <div class="d-flex justify-content-start align-items-center" *ngIf="editFlag">
+                    <mat-form-field class="example-full-width">
+                        <input style="font-size: 11px" matInput placeholder="Monto a Pagar" [value]="i['isParcial'] == 1 ? i['montoParcial'] : i['monto']" #monto5>
+                    </mat-form-field>
+                    <button style="zoom: 0.8" mat-icon-button color='warn' (click)="editFlag = false" [disabled]="loading['editmonto']"><mat-icon *ngIf="!loading['editmonto']">cancel</mat-icon><span *ngIf="loading['editmonto']"><i class="fa fa-spinner fa-pulse"></i></span></button>
+                    <button style="zoom: 0.8" mat-icon-button color='primary' (click)="editMonto(monto5)" [disabled]="loading['editmonto']"><mat-icon *ngIf="!loading['editmonto']">done</mat-icon><span *ngIf="loading['editmonto']"><i class="fa fa-spinner fa-pulse"></i></span></button>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Status de pago:</b></div>
+                    <div class="clientInfo">{{ i['tipoPago'] }}</div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="productConceptXL"><b>Moneda:</b></div>
+                    <div class="clientInfo">{{ i['moneda'] }}</div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <!-- END ITEM CONCIERTO -->
+
     <div class="d-flex justify-content-end align-items-center">
         <div class="clientConcept"><b>Vouchers:</b></div>
         <div class="clientInfo">

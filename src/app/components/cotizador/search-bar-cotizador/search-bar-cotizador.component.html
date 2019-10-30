@@ -2,7 +2,7 @@
     <div class='container pt-5 d-flex justify-content-between'>
 
         <div class="form d-flex justify-content-start pr-3">
-            <div class="form-group p-1">
+            <div class="form-group p-1" *ngIf="isDate">
                 <label for="fechas">{{ endDateSep ? 'Inicio' : 'Fechas' }}</label>
                 <div class="input-group">
                     <input class="form-control" *ngIf="!endDate" [minDate]="minDate" placeholder="yyyy-mm-dd" [autoClose]="false" (click)="d.toggle()" id="picker" name="dp" ngbDatepicker #d="ngbDatepicker" (dateSelect)="onDateSelection($event, d)" autocomplete="off" [style.width.px]="150">
