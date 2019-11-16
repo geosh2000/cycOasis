@@ -120,6 +120,7 @@ export class RsvListComponent implements OnInit {
   currentUser: any
   showContents = false
   searchFlag = false
+  byEvent = false
   mainCredential = 'rsv_manage'
 
   loading:Object = {}
@@ -135,6 +136,7 @@ export class RsvListComponent implements OnInit {
   toDate: NgbDateStruct;
   inicio: any;
   fin: any;
+  eventos:any = []
 
   config:EasyTableServiceService
   columns:any = [
@@ -188,6 +190,28 @@ export class RsvListComponent implements OnInit {
     }else{
       return false
     }
+  }
+
+  getEventos( f ) {
+
+    if( !f ){ return false }
+    this.loading['eventos'] = true;
+
+
+    this._api.restfulGet( '', 'Lists/gruposTarifaConcert' )
+                .subscribe( res => {
+
+                  this.loading['eventos'] = false;
+                  this.eventos = res['data']
+
+                }, err => {
+                  this.loading['eventos'] = false;
+
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
   }
 
   getTableConfig(){

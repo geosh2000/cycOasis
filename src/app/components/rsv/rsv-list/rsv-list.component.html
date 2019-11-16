@@ -80,6 +80,15 @@
                 <div class="m-1">
                     <ui-switch size="small" name='noXld' [(ngModel)]="search['noXld']" checkedLabel='Sin Xld' uncheckedLabel='Todas'></ui-switch>
                 </div>
+                <div class="m-1">
+                    <ui-switch size="small" name='noXld' [(ngModel)]="search['eventFlag']" (change)="getEventos($event)" checkedLabel='Todas' uncheckedLabel='Evento'></ui-switch>
+                </div>
+                <div class="form-group p-1" *ngIf="byEvent">
+                    <label for="grupo">Código</label>
+                    <select [(ngModel)]="search['event']" name="grupo" id="grupo" class="form-control">
+                                            <option [value]="ev['evento']" *ngFor="let ev of eventos">{{ ev['evento'] }}</option>
+                                        </select>
+                </div>
             </div>
             <div class="container d-flex justify-content-end p-2">
                 <button mat-raised-button color="primary" (click)="searchLocs()">Buscar</button>

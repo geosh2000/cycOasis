@@ -2,13 +2,15 @@
     <div class='container-fluid p-0'>
         <mat-progress-bar mode="query" *ngIf="loading['services']"></mat-progress-bar>
         <mat-tab-group (selectedTabChange)="tabChg($event.index)" mat-stretch-tabs [color]="'warn'" *ngIf="!loading['services']">
-            <mat-tab *ngFor="let m of products" [disabled]="m['enabled'] != 1">
-                <ng-template mat-tab-label>
-                    <mat-icon style="margin-right: 8px;">{{ m['icon'] }}</mat-icon>
-                    {{ m['title'] }}
-                </ng-template>
+            <ng-container *ngFor="let m of products">
+                <mat-tab *ngIf="m['all'] == 1 || _init.checkSingleCredential('app_all_quote')" [id]="m['id']" [disabled]="m['enabled'] != 1">
+                    <ng-template mat-tab-label>
+                        <mat-icon style="margin-right: 8px;">{{ m['icon'] }}</mat-icon>
+                        {{ m['title'] }}
+                    </ng-template>
 
-            </mat-tab>
+                </mat-tab>
+            </ng-container>
         </mat-tab-group>
     </div>
 </div>

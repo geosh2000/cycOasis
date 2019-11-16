@@ -76,7 +76,7 @@ export class RsvPaymentRegistryComponent implements OnInit {
 
     switch(p){
       case 'complejo':
-        this.newPayment.controls['afiliacion'].setValue(`${this.newPayment.controls['proveedor'].value == 'Paypal' ? 'PP' : 'DP'}_${e.value}`)
+        this.newPayment.controls['afiliacion'].setValue(`${this.newPayment.controls['proveedor'].value == 'Paypal' ? 'PP' : this.newPayment.controls['proveedor'].value == 'Tpv' ? 'TPV' : 'DP'}_${e.value}`)
         break
       case 'proveedor':
         this.newPayment.controls['tipo'].setValue(e.value)

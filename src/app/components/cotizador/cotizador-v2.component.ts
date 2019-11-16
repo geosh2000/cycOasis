@@ -151,6 +151,7 @@ export class CotizadorV2Component implements OnInit, OnDestroy {
   linkedTicketFlag = false
   budgetTicket:any
   budgetExistingBudgets:any = []
+  resTours:any = []
 
   lastLocCreated:any
   linkTicket:any = []
@@ -324,6 +325,7 @@ export class CotizadorV2Component implements OnInit, OnDestroy {
                   this.resultCot['gen']['noches'] = b.diff(a, 'days');
 
                   this.resultCot['habs'] = this.buildData(res['data'])
+                  this.resTours = res['tours']
 
                   console.log( this.resultCot)
 

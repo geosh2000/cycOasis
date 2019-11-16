@@ -251,7 +251,7 @@ export class Rsv2ManageComponent implements OnInit {
     if( this.cancelItemData['isQuote'] == 1 ){
       this.sendCancellation()
     }else{
-      if(this._init.currentUser.credentials['rsv_cancelAll']){
+      if(this._init.currentUser.credentials['rsv_cancelAll'] == 1){
         this.sendCancellation( true )
       }else{
         this.toastr.error( 'La reserva ya cuenta con pagos, solicita a tu gerente realizar la cancelación', 'No es podible cancelar' )
