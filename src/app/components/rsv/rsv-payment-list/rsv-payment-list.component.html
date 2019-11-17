@@ -127,7 +127,7 @@
                             </mat-chip-list>
                         </span>
                         <span style="font-size: smaller" class="d-inline-block" *ngSwitchCase="'ticket'">
-                          <a [href]="row['ticketUrl']" target="_blank" *ngIf="row[item['key']] != null && row[item['key']] != 0">
+                          <a [href]="row[item['key']] | domseguro:'https://oasishoteles.zendesk.com/tickets/'" target="_blank" *ngIf="row[item['key']] != null && row[item['key']] != 0">
                             #{{ row[item['key']] }}
                           </a>
                         </span>

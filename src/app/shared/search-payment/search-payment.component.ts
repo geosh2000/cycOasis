@@ -63,6 +63,15 @@ import { ToastrService } from 'ngx-toastr';
     align-items: center;
   }
 
+  .typeWidth{
+    width: 80px;
+  }
+
+  .mat-form-field-infix{
+    width: 100px !important;
+    font-size: smaller !important;
+  }
+
   mat-form-field {
     margin-right: 12px;
   }
@@ -108,15 +117,15 @@ export class SearchPaymentComponent implements OnInit {
     this.noResults = false
 
 
-    this._api.restfulPut( {val: this.mail}, 'Rsv/searchPaymentsToLink' )
+    this._api.restfulPut( {searchString: this.mail, locFlag:true}, 'Rsv/listPaymentsV2' )
                 .subscribe( res => {
 
                   this.loading['search'] = false;
                   let result = res['data']
-                  result = this.orderPipe.transform(result, 'masterItemLocator')
+                  result = this.orderPipe.transform(result, 'dtCreated', true)
 
                   this.data = result
-                  if( this.data.length == 0 ){
+                  if( this.data['items'].length == 0 ){
                     this.noResults = true
                   }
 

@@ -43,6 +43,8 @@
             <div class="itemsFrame col-9 pb-4">
                 <div class="d-flex justify-content-end p-1">
                     <!-- <button mat-button style="zoom: 0.8" color="warn"><mat-icon>edit</mat-icon> Modificar</button> -->
+                    <button mat-button style="zoom: 0.8" color="primary" (click)="_regP.openModal()" *ngIf="_init.checkSingleCredential('rsv_paymentReg')"><mat-icon>play_for_work</mat-icon> Registrar Pago</button>
+                    <button mat-button style="zoom: 0.8" color="primary" (click)="_linkP.openModal( data['master'] )"><mat-icon>link</mat-icon> Ligar</button>
                     <button mat-button style="zoom: 0.8" color="primary" (click)="_payment.openModal( data['master']['zdUserId'], data['items'] )"><mat-icon>payment</mat-icon> Saldar</button>
                 </div>
                 <div class="container p-1 bg-light">
@@ -210,21 +212,28 @@
 </div>
 
 <!-- ====================== CONFIRMAR CANCELACION ====================== -->
-<div class="modal fade" id="cancelConfirm" tabindex="-1" role="dialog" aria-labelledby="cancelConfirmLabel" aria-hidden="true" backdrop="static">
+<div class="modal fade" id="cancelConfirm" tabindex="-1" role="dialog" aria-labelledby="cancelConfirmLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="cancelConfirmLabel">Confirmar cancelación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+
             </div>
             <div class="modal-body">
-                Estás seguro que deseas cancelar este item?
+                <div>
+                    Estás seguro que deseas cancelar este item?
+                </div>
+                <br>
+                <div class='conainer p-1 d-flex justify-content-end' *ngIf="maxPenalidad>0">
+                    <mat-form-field class='ml-auto'>
+                        <input matInput #postalCode type='number' [max]="maxPenalidad" placeholder="Monto Penalidad" [(ngModel)]="xldPenalidad" autocomplete="off">
+                        <mat-hint align="end">A reembolsar: {{ (maxPenalidad - xldPenalidad) | currency:'MXN':'symbol-narrow':'.2-2'}}</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="loading['cancel']">Cerrar</button>
-                <button type="button" class="btn btn-danger" (click)="confirmCancel()" [disabled]="loading['cancel']"><span *ngIf="!loading['cancel']">Aceptar</span><span *ngIf="loading['cancel']"><i class="fa fa-spinner fa-pulse"></i></span></button>
+                <button type="button" class="btn btn-secondary" (click)="closeCancelModal()" [disabled]="loading['cancel']">Cerrar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmCancel()" [disabled]="loading['cancel'] || (maxPenalidad>0 && (!xldPenalidad || (maxPenalidad - xldPenalidad)<0))"><span *ngIf="!loading['cancel']">Aceptar</span><span *ngIf="loading['cancel']"><i class="fa fa-spinner fa-pulse"></i></span></button>
             </div>
         </div>
     </div>
@@ -232,7 +241,7 @@
 <!-- ====================== FIN CONFIRMAR CANCELACION ====================== -->
 
 <!-- ====================== INGRESAR CONFIRMACION ====================== -->
-<div class="modal fade" id="regConfirm" tabindex="-1" role="dialog" aria-labelledby="regConfirmLabel" aria-hidden="true" backdrop="static">
+<div class="modal fade" id="regConfirm" tabindex="-1" role="dialog" aria-labelledby="regConfirmLabel" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -271,3 +280,11 @@
 <!-- ====================== MODAL DE VOUCHER ====================== -->
 <app-upload-image (loadResult)="imgLoaded($event)"></app-upload-image>
 <!-- ====================== FIN MODAL DE VOUCHER ====================== -->
+
+<!-- ====================== MODAL DE LINK PAYMENT ====================== -->
+<app-rsv-link-payment-direct (linked)="linked($event)"></app-rsv-link-payment-direct>
+<!-- ====================== FIN MODAL DE LINK PAYMENT ====================== -->
+
+<!-- ====================== MODAL DE REG PAYMENT ====================== -->
+<app-rsv-payment-registry></app-rsv-payment-registry>
+<!-- ====================== FIN MODAL DE REG PAYMENT ====================== -->

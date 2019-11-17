@@ -172,6 +172,7 @@ import { CotizaAutoComponent } from './components/cotizador/cotiza-auto/cotiza-a
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { CotizaXtrasComponent } from './components/cotizador/cotiza-xtras/cotiza-xtras.component';
 import { CotizaConcertComponent } from './components/cotizador/cotiza-concert/cotiza-concert.component';
+import { RsvLinkPaymentDirectComponent } from './components/rsv/rsv-link-payment-direct/rsv-link-payment-direct.component';
 
 @NgModule({
   declarations: [
@@ -282,7 +283,8 @@ import { CotizaConcertComponent } from './components/cotizador/cotiza-concert/co
     ExtranetListComponent,
     CotizaAutoComponent,
     CotizaXtrasComponent,
-    CotizaConcertComponent
+    CotizaConcertComponent,
+    RsvLinkPaymentDirectComponent
 
   ],
   imports: [

@@ -14,6 +14,8 @@ import { OrderPipe } from 'ngx-order-pipe';
 import { DoPaymentComponent } from '../do-payment/do-payment.component';
 import { UploadImageComponent } from 'src/app/components/formularios/upload-image.component';
 import { ZonaHorariaService } from '../../../services/zona-horaria.service';
+import { RsvLinkPaymentDirectComponent } from '../../rsv/rsv-link-payment-direct/rsv-link-payment-direct.component';
+import { RsvPaymentRegistryComponent } from '../../rsv/rsv-payment-registry/rsv-payment-registry.component';
 
 @Component({
   selector: 'app-rsv2-manage',
@@ -24,6 +26,8 @@ export class Rsv2ManageComponent implements OnInit {
 
   @ViewChild(DoPaymentComponent, {static:false}) _payment:DoPaymentComponent
   @ViewChild(UploadImageComponent, {static: false}) _upl:UploadImageComponent
+  @ViewChild(RsvLinkPaymentDirectComponent,{static:false}) _linkP:RsvLinkPaymentDirectComponent;
+  @ViewChild(RsvPaymentRegistryComponent,{static:false}) _regP:RsvPaymentRegistryComponent;
 
   currentUser: any;
   showContents = false;
@@ -35,6 +39,9 @@ export class Rsv2ManageComponent implements OnInit {
   viewLoc:any
   history:any = []
   mlTicket:any
+
+  maxPenalidad = 0
+  xldPenalidad
 
   data:Object = {
     master: {},
@@ -239,6 +246,7 @@ export class Rsv2ManageComponent implements OnInit {
 
   cancelItem(i){
     this.cancelItemData = i
+    this.maxPenalidad = i['montoPagado']
     jQuery('#cancelConfirm').modal('show')
   }
 
@@ -288,11 +296,19 @@ export class Rsv2ManageComponent implements OnInit {
   sendCancellation( flag = false ){
     this.loading['cancel'] = true
 
-    this._api.restfulPut( {data: this.cancelItemData, flag}, 'Rsv/cancelItem' )
+    let params = {data: this.cancelItemData, flag}
+
+    if( this.xldPenalidad != null ){
+      params['penalidad'] = this.xldPenalidad
+    }
+
+    this._api.restfulPut( params, 'Rsv/cancelItem' )
                 .subscribe( res => {
 
                   this.loading['cancel'] = false;
                   jQuery('#cancelConfirm').modal('hide')
+                  this.xldPenalidad = null
+                  this.maxPenalidad = 0
                   this.getLoc(this.viewLoc)
 
                 }, err => {
@@ -303,6 +319,12 @@ export class Rsv2ManageComponent implements OnInit {
                   console.error(err.statusText, error.msg);
 
                 });
+  }
+
+  closeCancelModal(){
+    jQuery('#cancelConfirm').modal('hide')
+    this.xldPenalidad = null
+    this.maxPenalidad = 0
   }
 
   sendComment(){
@@ -336,6 +358,10 @@ export class Rsv2ManageComponent implements OnInit {
     }else{
       this.toastr.error(e.msg, 'ERROR!')
     }
+  }
+
+  linked(e){
+    this._linkP.closeModal()
   }
 
 }

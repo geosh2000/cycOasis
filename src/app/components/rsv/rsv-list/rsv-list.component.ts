@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { EasyTableServiceService } from '../../../services/easy-table-service.service';
-import { ApiService, InitService, TokenCheckService } from 'src/app/services/service.index';
+import { ApiService, InitService, TokenCheckService, ZonaHorariaService } from 'src/app/services/service.index';
 import { NgbDateAdapter, NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
@@ -143,8 +143,8 @@ export class RsvListComponent implements OnInit {
     { type: 'default', key: 'masterlocatorid', title: 'Loc.' },
     { type: 'npropio', key: 'nombreCliente', title: 'Nombre' },
     { type: 'default', key: 'grupos', title: 'Grupos Tfa' },
-    { type: 'default', key: 'servicios', title: 'Servicios' },
-    { type: 'nr', key: 'nrCount', title: 'NR' },
+    { type: 'serv', key: 'servicios', title: 'Servicios' },
+    { type: 'cot', key: 'quoteStatus', title: 'Status' },
     { type: 'date', key: 'llegadaOk', title: 'Inicio' },
     { type: 'date', key: 'salidaOk', title: 'Fin' },
     { type: 'money', key: 'montoMXN', title: 'Monto MXN' },
@@ -158,6 +158,7 @@ export class RsvListComponent implements OnInit {
   constructor(public _api: ApiService,
               private titleService: Title,
               public _init:InitService,
+              public _tz:ZonaHorariaService,
               private _tokenCheck:TokenCheckService,
               public toastr: ToastrService ) {
 
@@ -290,6 +291,12 @@ export class RsvListComponent implements OnInit {
   formatDate( e, f ){
     // return e
     return moment(e).format(f)
+  }
+
+  isVigente(e){
+    let m = moment.tz(e, this._tz.defaultZone).tz(this._tz.zone)
+
+    return m > moment()
   }
 
 }
