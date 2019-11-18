@@ -161,17 +161,29 @@ export class Rsv2ManageComponent implements OnInit {
   }
 
   saveMonto( e ){
+
+    console.log(e)
+
     for( let i of this.data['items'] ){
       if( e['itemId'] == i['itemId'] ){
-        i['isParcial'] = e['isParcial']
-        i['isPagoHotel'] = e['isPagoHotel']
-        i['montoParcial'] = e['montoParcial']
-        i['tipoPago'] = e['tipoPago']
-        i['confirm'] = e['confirm']
-        i['isQuote'] = e['isQuote']
-        return true
+        console.log( 'items iguales')
+        if( e['isMontoTotal'] ){
+          console.log( 'change montos')
+          i['monto'] = e['newMonto']
+          i['montoParcial'] = e['montoParcial']
+        }else{
+          i['isParcial'] = e['isParcial']
+          i['isPagoHotel'] = e['isPagoHotel']
+          i['montoParcial'] = e['montoParcial']
+          i['tipoPago'] = e['tipoPago']
+          i['confirm'] = e['confirm']
+          i['isQuote'] = e['isQuote']
+        }
+        break
       }
     }
+
+
     this.rsvTypeCheck()
     this.getHistory(this.mlTicket)
   }
@@ -225,6 +237,7 @@ export class Rsv2ManageComponent implements OnInit {
   }
 
   getHistory( tkt = this.mlTicket ){
+
     this.loading['history'] = true
 
     this._api.restfulGet( tkt, 'Rsv/getHistory' )
