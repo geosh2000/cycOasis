@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { ApiService, InitService, TokenCheckService, ZonaHorariaService } from '../../../services/service.index';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 declare var jQuery: any;
 import * as moment from 'moment-timezone';
+import { SearchPaymentComponent } from '../../../shared/search-payment/search-payment.component';
 
 @Component({
   selector: 'app-do-payment',
@@ -15,7 +16,9 @@ import * as moment from 'moment-timezone';
 export class DoPaymentComponent implements OnInit {
 
   @ViewChild('shoes', {static: false}) _shoes:any
+  @ViewChild(SearchPaymentComponent, {static: false}) _sp:SearchPaymentComponent
   @Output() paid  = new EventEmitter()
+  @Input() ml:any
 
   selectAccount:FormGroup
   selectItems:FormGroup
@@ -88,9 +91,11 @@ export class DoPaymentComponent implements OnInit {
   }
 
   openModal( u, items ){
+    this._sp.mail=this.ml
+    this._sp.search()
     jQuery('#doPayment').modal('show')
     this.itms = items
-    this.getAccount( u )
+    // this.getAccount( u )
   }
 
   getAccount( u ){
@@ -113,12 +118,15 @@ export class DoPaymentComponent implements OnInit {
                 });
   }
 
-  selAccount( i, s, m, stp ){
-    this.selectAccount.controls['selectedAccount'].setValue(i)
-    this.remaining = s
-    this.accMon = m
-    this.accSaldo = s
+  selAccount( e, stp ){
+    this.selectAccount.controls['selectedAccount'].setValue(e[0]['operacion'])
+    this.remaining = parseFloat(e[0]['montoSaldo'])
+    this.accMon = e[0]['moneda'] == 'MEX' ? 'MXN' : e[0]['moneda']
+    this.accSaldo = parseFloat(e[0]['montoSaldo'])
     stp.next()
+  }
+  selAccountTest( e, stp ){
+    console.log(e)
   }
 
   colorConfirm( i ){

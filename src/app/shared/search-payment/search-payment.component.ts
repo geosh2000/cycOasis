@@ -94,24 +94,29 @@ export class SearchPaymentComponent implements OnInit {
 
   @Output() selected = new EventEmitter
   @Input() maxHeight:any = 900
+  @Input() defaultSearch:any 
 
 
   mail:any
   loading:Object = {
   }
   data:any = []
-  noResults:boolean = false
+  noResults = false
 
   constructor(public _api: ApiService,
-                private orderPipe: OrderPipe,
-                public toastr: ToastrService) { 
+              private orderPipe: OrderPipe,
+              public toastr: ToastrService) { 
                 }
 
   ngOnInit() {
+    this.mail = this.defaultSearch
+    if( this.mail ){
+      this.search()
+    }
   }
 
   search(){
-    
+
     this.selected.emit([null,false])
     this.loading['search'] = true;
     this.noResults = false

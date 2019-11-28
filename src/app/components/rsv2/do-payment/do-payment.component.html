@@ -4,66 +4,7 @@
             <mat-horizontal-stepper [linear]="true" #stepper>
                 <mat-step [stepControl]="selectAccount">
                     <ng-template matStepLabel>Selecciona una cuenta</ng-template>
-                    <mat-spinner *ngIf="loading['accounts']"></mat-spinner>
-                    <div class="d-flex justify-content.justify-content-between align-items-center flex-wrap" *ngIf="accounts.length>0">
-                        <mat-list class='container'>
-                            <mat-list-item>
-                                <div class="row container">
-                                    <div class="col-1 text-center">
-                                        <b>ID</b>
-                                    </div>
-                                    <div class="col-2 text-center">
-                                        <b>Cuenta</b>
-                                    </div>
-                                    <div class="col-3 text-info text-center">
-                                        <b>Monto Total</b>
-                                    </div>
-                                    <div class="col-3 text-success text-center">
-                                        <b>Monto Disponible</b>
-                                    </div>
-                                    <div class="col-1 text-center">
-                                        <b>Moneda</b>
-                                    </div>
-                                    <div class="col-2 text-center">
-                                        <b>Acciones</b>
-                                    </div>
-                                </div>
-                            </mat-list-item>
-                            <ng-container *ngFor="let a of accounts">
-                                <mat-list-item>
-                                    <div class="container row">
-                                        <div class="text-center col-1">
-                                            {{ a['id'] }}
-                                        </div>
-                                        <div class="text-center col-2">
-                                            <b>{{ a['cuenta'] }}</b>
-                                        </div>
-                                        <div class="text-center col-3 text-info">
-                                            {{ a['pagado'] | currency:'MXN':'symbol-narrow':'.2-2' }}
-                                        </div>
-                                        <div class="text-center col-3 text-success">
-                                            <b>{{ a['saldo'] | currency:'MXN':'symbol-narrow':'.2-2' }}</b>
-                                        </div>
-                                        <div class="col-1 text-info text-center">
-                                            <b>{{ a['moneda'] }}</b>
-                                        </div>
-                                        <div class="col-2 text-info text-center">
-                                            <button mat-raised-button color='primary' (click)="selAccount(a['id'], a['saldo'], a['moneda'], stepper)" [disabled]="a['saldo']<=0"><mat-icon>done</mat-icon></button>
-                                        </div>
-                                    </div>
-                                </mat-list-item>
-                                <mat-divider></mat-divider>
-                            </ng-container>
-                        </mat-list>
-                        <div class='container ml-auto text-right p-3'>
-                            <div class="d-flex justify-content-end p-2">
-                                <button mat-raised-button class="m-1" color="danger" (click)="closeModal(stepper)" [disabled]="loading['checkOut']">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="alert alert-danger ml-auto mr-auto" role="alert" *ngIf="accounts.length == 0">
-                        No existen cuentas ligadas a este cliente. Revisa que los pagos estén bien asignados
-                    </div>
+                    <app-search-payment (selected)="selAccount($event, stepper)" [defaultSearch]="ml"></app-search-payment>
                 </mat-step>
                 <mat-step [stepControl]="selectItems">
                     <ng-template matStepLabel>Elige lo items</ng-template>
