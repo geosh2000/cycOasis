@@ -16,6 +16,7 @@ import { UploadImageComponent } from 'src/app/components/formularios/upload-imag
 import { ZonaHorariaService } from '../../../services/zona-horaria.service';
 import { RsvLinkPaymentDirectComponent } from '../../rsv/rsv-link-payment-direct/rsv-link-payment-direct.component';
 import { RsvPaymentRegistryComponent } from '../../rsv/rsv-payment-registry/rsv-payment-registry.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rsv2-manage',
@@ -28,6 +29,8 @@ export class Rsv2ManageComponent implements OnInit {
   @ViewChild(UploadImageComponent, {static: false}) _upl:UploadImageComponent
   @ViewChild(RsvLinkPaymentDirectComponent,{static:false}) _linkP:RsvLinkPaymentDirectComponent;
   @ViewChild(RsvPaymentRegistryComponent,{static:false}) _regP:RsvPaymentRegistryComponent;
+
+  penaltyXld:FormGroup
 
   currentUser: any;
   showContents = false;
@@ -42,6 +45,7 @@ export class Rsv2ManageComponent implements OnInit {
 
   maxPenalidad = 0
   xldPenalidad
+  rlPayments = []
 
   data:Object = {
     master: {},
@@ -60,6 +64,7 @@ export class Rsv2ManageComponent implements OnInit {
 
   constructor(public _api: ApiService,
               public _init: InitService,
+              private _formBuilder: FormBuilder,
               private titleService: Title,
               private _tokenCheck: TokenCheckService,
               private route: Router,
@@ -100,6 +105,35 @@ export class Rsv2ManageComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('CyC - Rsv Manager');
+
+    this.penaltyXld = this._formBuilder.group({
+      penalty: ['', Validators.required]
+    });
+  }
+
+  setPenalty( e ){
+    this.penaltyXld.controls['penalty'].setValue(this.xldPenalidad)
+    console.log(this.penaltyXld)
+    e.next()
+  }
+
+  getRelatedPayments( i ){
+    this.loading['rlPay'] = true
+
+    this._api.restfulGet( i['itemLocatorId'], 'Rsv/itemPayments' )
+                .subscribe( res => {
+
+                  this.loading['rlPay'] = false;
+
+                  this.rlPayments = res['data']
+                }, err => {
+                  this.loading['rlPay'] = false;
+
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
   }
 
   getLoc( l ){
@@ -188,6 +222,42 @@ export class Rsv2ManageComponent implements OnInit {
     this.getHistory(this.mlTicket)
   }
 
+  reactivate(i){
+    this.loading['reactivate'] = true
+
+    this._api.restfulPut( i, 'Rsv/reactivate' )
+                .subscribe( res => {
+
+                  this.loading['reactivate'] = false;
+
+                  this.toastr.success('Rsva Reactivada','Correcto!')
+                  this.getLoc( this.viewLoc )
+                  this.getHistory(this.mlTicket)
+
+                }, err => {
+                  this.loading['reactivate'] = false;
+
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
+  }
+
+  saveName( e ){
+
+    for( let i of this.data['items'] ){
+      if( e['itemId'] == i['itemId'] ){
+        i['nombreCliente'] = e['nombre']
+        break
+      }
+    }
+
+
+    this.rsvTypeCheck()
+    this.getHistory(this.mlTicket)
+  }
+
   selectLoc( e ){
     this.route.navigateByUrl(`/rsv2/${e['masterlocatorid']}`);
   }
@@ -261,6 +331,7 @@ export class Rsv2ManageComponent implements OnInit {
     this.cancelItemData = i
     this.maxPenalidad = i['montoPagado']
     jQuery('#cancelConfirm').modal('show')
+    this.getRelatedPayments( i )
   }
 
   confirmItem(i){

@@ -44,7 +44,7 @@
                 <div class="d-flex justify-content-end p-1">
                     <!-- <button mat-button style="zoom: 0.8" color="warn"><mat-icon>edit</mat-icon> Modificar</button> -->
                     <button mat-button style="zoom: 0.8" color="primary" (click)="_regP.openModal()" *ngIf="_init.checkSingleCredential('rsv_paymentReg')"><mat-icon>play_for_work</mat-icon> Registrar Pago</button>
-                    <button mat-button style="zoom: 0.8" color="primary" (click)="_linkP.openModal( data['master'] )"><mat-icon>link</mat-icon> Ligar</button>
+                    <!-- <button mat-button style="zoom: 0.8" color="primary" (click)="_linkP.openModal( data['master'] )"><mat-icon>link</mat-icon> Ligar</button> -->
                     <button mat-button style="zoom: 0.8" color="primary" (click)="_payment.openModal( data['master']['zdUserId'], data['items'] )"><mat-icon>payment</mat-icon> Saldar</button>
                 </div>
                 <div class="container p-1 bg-light">
@@ -97,10 +97,11 @@
                             <div class="alert alert-info" role="alert" *ngIf="i['isFree'] == 1">
                                 Item marcado como cortesía, relacionado con reservas {{ i['cieloRelates'] }}
                             </div>
-                            <app-edit-monto-parcial [i]="i" (saveMonto)="saveMonto( $event )" (uplImg)="uplImg($event)"></app-edit-monto-parcial>
+                            <app-edit-monto-parcial [i]="i" (confSent)="getHistory(mlTicket)" (saveMonto)="saveMonto( $event )" (saveName)="saveName( $event )" (uplImg)="uplImg($event)"></app-edit-monto-parcial>
                             <div class="container d-flex justify-content-end">
                                 <div class="mr-auto"><span class="productConceptXL">Notas: </span><span class="clientInfo">{{ i['notas'] }}</span></div>
                                 <button class='p-1' mat-button style="zoom: 0.8" color="danger" (click)="cancelItem(i)"><mat-icon>remove_circle</mat-icon> Cancelar</button>
+                                <button class='p-1' mat-button style="zoom: 0.8" color="alert" (click)="reactivate(i)" *ngIf="_init.checkSingleCredential('rsv_reactivate')"><ng-container *ngIf="loading['reactivate']"><span><i class="fas fa-spinner fa-pulse"></i></span></ng-container><ng-container *ngIf="!loading['reactivate']"><mat-icon>alarm_add</mat-icon> Reactivar</ng-container></button>
                                 <button class='p-1' mat-button style="zoom: 0.8" color="primary" (click)="confirmItem(i)" *ngIf="i['isQuote'] == 0 && i['confirmOK'] == null"><mat-icon>done_outline</mat-icon> Confirmar</button>
                             </div>
 
@@ -197,7 +198,7 @@
                             <small><b>{{ formatDate(c['Fecha'], 'ddd DD MMM YYYY') }} <span class="text-info">{{ formatDate(c['Fecha'], 'HH:mm') }} hrs</span>:</b></small>
                         </div>
                         <div class="col pl-0">
-                            <span class="text-secondary">{{ c['msg'] }}</span>
+                            <span class="text-secondary" [innerHTML]="c['msg']"></span>
                         </div>
                     </div>
 
@@ -224,16 +225,43 @@
                     Estás seguro que deseas cancelar este item?
                 </div>
                 <br>
-                <div class='conainer p-1 d-flex justify-content-end' *ngIf="maxPenalidad>0">
-                    <mat-form-field class='ml-auto'>
-                        <input matInput #postalCode type='number' [max]="maxPenalidad" placeholder="Monto Penalidad" [(ngModel)]="xldPenalidad" autocomplete="off">
-                        <mat-hint align="end">A reembolsar: {{ (maxPenalidad - xldPenalidad) | currency:'MXN':'symbol-narrow':'.2-2'}}</mat-hint>
-                    </mat-form-field>
-                </div>
+                <!-- <mat-horizontal-stepper [linear]="true" #stepper *ngIf="maxPenalidad>0">
+                    <mat-step [stepControl]="penaltyXld">
+                        <ng-template matStepLabel>Ingresa el monto de penalidad</ng-template>
+                        <div class='conainer p-1 d-flex justify-content-center'>
+                            <mat-form-field>
+                                <input matInput #postalCode type='number' [max]="maxPenalidad" placeholder="Monto Penalidad" [(ngModel)]="xldPenalidad" autocomplete="off">
+                                <mat-hint align="end">A reembolsar: {{ (maxPenalidad - xldPenalidad) | currency:'MXN':'symbol-narrow':'.2-2'}}</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="d-flex justify-content-end p-2">
+                            <button mat-raised-button class="m-1" color="danger" (click)="closeCancelModal( stepper )" [disabled]="loading['checkOut']">Cancelar</button>
+                            <button mat-raised-button matStepperPrevious [disabled]="true">Back</button>
+                            <button mat-raised-button color="primary" (click)="setPenalty(stepper)" [disabled]="xldPenalidad<0">Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="penaltyXld">
+                        <ng-template matStepLabel>Ingresa el monto de penalidad</ng-template>
+                        <div class='conainer p-1 d-flex justify-content-center' *ngIf="loading['rlPay']">
+                            <mat-spinner></mat-spinner>
+                        </div>
+                        <div class='conainer p-1 d-flex justify-content-center' *ngIf="!loading['rlPay']">
+                            <pre>{{ rlPayments | json }}</pre>
+                        </div>
+                        <div class="d-flex justify-content-end p-2">
+                            <button mat-raised-button class="m-1" color="danger" (click)="closeCancelModal( stepper )" [disabled]="loading['checkOut']">Cancelar</button>
+                            <button mat-raised-button matStepperPrevious>Back</button>
+                            <button mat-raised-button color="primary" (click)="stepper.next()" [disabled]="maxPenalidad>=0">Next</button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper> -->
+
             </div>
+            <!-- <div class="modal-footer" *ngIf="!xldPenalidad"> -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="closeCancelModal()" [disabled]="loading['cancel']">Cerrar</button>
-                <button type="button" class="btn btn-danger" (click)="confirmCancel()" [disabled]="loading['cancel'] || (maxPenalidad>0 && (!xldPenalidad || (maxPenalidad - xldPenalidad)<0))"><span *ngIf="!loading['cancel']">Aceptar</span><span *ngIf="loading['cancel']"><i class="fa fa-spinner fa-pulse"></i></span></button>
+                <!-- <button type="button" class="btn btn-danger" (click)="confirmCancel()" [disabled]="loading['cancel'] || (maxPenalidad>=0 && (!xldPenalidad || (maxPenalidad - xldPenalidad)<0))"><span *ngIf="!loading['cancel']">Aceptar</span><span *ngIf="loading['cancel']"><i class="fa fa-spinner fa-pulse"></i></span></button> -->
+                <button type="button" class="btn btn-danger" (click)="confirmCancel()" [disabled]="loading['cancel']"><span *ngIf="!loading['cancel']">Aceptar</span><span *ngIf="loading['cancel']"><i class="fa fa-spinner fa-pulse"></i></span></button>
             </div>
         </div>
     </div>
