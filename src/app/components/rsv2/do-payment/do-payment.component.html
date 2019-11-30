@@ -21,10 +21,10 @@
                         </div>
                         <mat-list class="container" #shoes>
                             <ng-container *ngFor="let i of itms">
-                                <ng-container *ngIf="i['moneda'] == accMon && isVigente(i['vigencia'])">
+                                <ng-container *ngIf="showItem(i)">
+                                    <!-- <ng-container> -->
                                     <!-- <mat-list-item *ngIf="i['montoPagado'] <= i['monto'] && i['moneda'] == accMon"> -->
                                     <div class="container row rowItem align-items-center">
-
                                         <div class="col-3">
                                             <button mat-icon-button color="primary">
                                                     <span class="mr-2">{{ i['itemLocatorId'] }}</span>

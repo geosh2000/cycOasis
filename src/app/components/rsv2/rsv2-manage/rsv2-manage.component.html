@@ -101,7 +101,7 @@
                             <div class="container d-flex justify-content-end">
                                 <div class="mr-auto"><span class="productConceptXL">Notas: </span><span class="clientInfo">{{ i['notas'] }}</span></div>
                                 <button class='p-1' mat-button style="zoom: 0.8" color="danger" (click)="cancelItem(i)"><mat-icon>remove_circle</mat-icon> Cancelar</button>
-                                <button class='p-1' mat-button style="zoom: 0.8" color="alert" (click)="reactivate(i)" *ngIf="_init.checkSingleCredential('rsv_reactivate')"><ng-container *ngIf="loading['reactivate']"><span><i class="fas fa-spinner fa-pulse"></i></span></ng-container><ng-container *ngIf="!loading['reactivate']"><mat-icon>alarm_add</mat-icon> Reactivar</ng-container></button>
+                                <button class='p-1' mat-button style="zoom: 0.8" color="alert" (click)="reactivate(i)" *ngIf="_init.checkSingleCredential('rsv_reactivate') && !isVigente(i['vigencia']) && i['isQuote'] == 1 && i['isCancel'] == 0"><ng-container *ngIf="loading['reactivate']"><span><i class="fas fa-spinner fa-pulse"></i></span></ng-container><ng-container *ngIf="!loading['reactivate']"><mat-icon>alarm_add</mat-icon> Reactivar</ng-container></button>
                                 <button class='p-1' mat-button style="zoom: 0.8" color="primary" (click)="confirmItem(i)" *ngIf="i['isQuote'] == 0 && i['confirmOK'] == null"><mat-icon>done_outline</mat-icon> Confirmar</button>
                             </div>
 

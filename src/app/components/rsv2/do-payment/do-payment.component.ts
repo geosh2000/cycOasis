@@ -277,4 +277,32 @@ export class DoPaymentComponent implements OnInit {
 
     return false
   }
+
+  showItem( i ){
+
+    if( i['moneda'] != this.accMon ){
+      return false
+    }
+
+    if( i['isCancel'] == '1' ){
+      return false
+    }
+
+    if( i['isQuote'] == '0' ){
+
+      if( parseFloat(i['monto']) <= parseFloat(i['montoPagado']) ){
+        return false
+      }
+
+    }else{
+
+      if( !this.isVigente(i['vigencia']) ){
+        return false
+      }
+
+    }
+
+    return true
+
+  }
 }

@@ -133,6 +133,7 @@ export class CreateRsvComponent implements OnInit {
               mdo: h['mayorista'],
               agencia: this.moneda ? h['agenciaMX'] : h['agenciaUS'],
               gpoTfa: this.moneda ? h['cieloMXN'] : h['cieloUSD'],
+              gpoCC: h['grupoCielo'],
               titular: this.newRsvForm.controls['nombreCliente'].value,
               adultos: h['rateAdults'],
               juniors: parseInt(h['rateMinors']) > 2 ? 1 : 0,

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InitService, ApiService } from 'src/app/services/service.index';
 import { ToastrService } from 'ngx-toastr';
 
+import * as moment from 'moment-timezone';
+
 @Component({
   selector: 'app-edit-prepay',
   templateUrl: './edit-prepay.component.html',
@@ -26,7 +28,7 @@ export class EditPrepayComponent implements OnInit {
 
   editMonto( m ){
 
-    if( this.i['isNR'] == '1' && !this._init.checkSingleCredential('rsv_cancelAll') ){
+    if( this.i['isNR'] == '1' && !this._init.checkSingleCredential('rsv_cancelAll') && moment().format('YYYY-MM-DD') != moment(this.i['llegada']).format('YYYY-MM-DD') ){
       this.toastr.error('No es posible modificar el monto a prepagar de una reserva "No Reembolsable". El prepago debe hacerse al 100%', 'ERROR!')
       return false
     }
