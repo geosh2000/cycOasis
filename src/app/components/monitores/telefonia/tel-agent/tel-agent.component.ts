@@ -10,6 +10,27 @@ import { OrderPipe } from 'ngx-order-pipe';
   templateUrl: './tel-agent.component.html',
   styles: [`
 
+
+  .mat-flash {
+     -webkit-animation: flash linear 1s infinite;
+     animation: flash linear 1s infinite;
+     background-color: #9c1414;
+        color: #fff;
+   }
+
+   @-webkit-keyframes flash {
+  	0% { opacity: 1; }
+  	50% { opacity: .1; }
+  	100% { opacity: 1; }
+  }
+
+  @keyframes flash {
+  	0% { opacity: 1; }
+  	50% { opacity: .1; }
+  	100% { opacity: 1; }
+  }
+
+
     .example-card {
       max-width: 400px;
     }
@@ -41,11 +62,23 @@ import { OrderPipe } from 'ngx-order-pipe';
       background-color: #71c4ff;
       color: 'black';
     }
+
+    .mat-danger {
+      background-color: #9c1414;
+      color: #fff;
+    }
+
+    .mat-card-avatar{
+      height: 100px;
+      width: 100px;
+      border-radius: 25%;
+    }
   `]
 })
 export class TelAgentComponent implements OnInit, OnDestroy {
 
   data = []
+  wa = {}
   lu = 'waiting...'
 
   loading = {}
@@ -83,13 +116,14 @@ export class TelAgentComponent implements OnInit, OnDestroy {
 
                   // tslint:disable-next-line: forin
                   for( let f of res['data']['data'][this.tps[tp][1]]){
+                    f['whatsapp'] = res['date']['wa'][f['agent_id']] ? res['date']['wa'][f['agent_id']] : {}
                     data.push(f)
                   }
 
                   data = this._ord.transform(data,'name')
                   this.data = data
-                  this.lu = moment(res['lu']).format('DD/MMM HH:mm:ss')
-
+                  this.lu = moment(res['date']['lu']).format('DD/MMM HH:mm:ss')
+                  console.log(this.data)
                   this.timeout = setTimeout( () => this.getData('agStatus' ), 2000 )
 
                 }, err => {
