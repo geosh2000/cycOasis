@@ -127,6 +127,8 @@ export class ExtPapeletaComponent implements OnInit {
                   this.data['items'][0][t == 'puo' ? 'dtPickUpOut' : 'dtPickUpIn'] = jQuery(v).val() + ' (capturado por: ' + this._init.currentUser.username + ')'
                   this.puoRo = true
 
+                  this.toastr.success( res['msg'], 'Pickup guardado' );
+
                 }, err => {
                   this.loading[t] = false;
 

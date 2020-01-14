@@ -6,6 +6,7 @@ import { ApiService, InitService } from 'src/app/services/service.index';
 import { OrderPipe } from 'ngx-order-pipe';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 declare var jQuery: any;
 
@@ -90,6 +91,13 @@ export class CotizaDayPassComponent implements OnInit {
   inicio: any;
   results:any = []
   occup:Object = {}
+  searchParams = {}
+
+  minDate:NgbDateStruct = {
+    day: parseInt(moment().format('DD')),
+    month: parseInt(moment().format('MM')),
+    year: parseInt(moment().format('YYYY'))
+  }
 
   constructor(public _api: ApiService,
               public _init: InitService,
@@ -100,6 +108,11 @@ export class CotizaDayPassComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  notToday(){
+    let f = moment(this.searchParams['inicio']).format('YYYY-MM-DD') != moment().format('YYYY-MM-DD')
+    return f
   }
 
   search( e ){
@@ -118,6 +131,7 @@ export class CotizaDayPassComponent implements OnInit {
                   }
 
                   this.results = results
+                  this.searchParams = e
                   this.occup = res['occup']
                   // this._search.reset()
 

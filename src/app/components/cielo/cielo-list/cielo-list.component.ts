@@ -124,7 +124,8 @@ export class CieloListComponent implements OnInit {
   data:any = []
 
   search:Object = {
-    searchString: ''
+    searchString: '',
+    mdo: ''
   }
 
   hoveredDate: NgbDateStruct;
@@ -132,15 +133,19 @@ export class CieloListComponent implements OnInit {
   toDate: NgbDateStruct;
   inicio: any;
   fin: any;
+  mdos:any = []
 
   config:EasyTableServiceService
   columns:any = [
-    { type: 'default', key: 'rsva', title: 'Loc.' },
+    { type: 'default', key: 'rsva', title: 'Rsva' },
+    { type: 'default', key: 'voucher', title: 'Voucher' },
     { type: 'default', key: 'hotel', title: 'Hotel' },
     { type: 'default', key: 'rp_char01', title: 'Cat.' },
+    { type: 'default', key: 'mdo', title: 'Mdo' },
+    { type: 'default', key: 'agencia', title: 'Agencia' },
     { type: 'default', key: 'grupo', title: 'Grupo Tfa' },
     { type: 'nr', key: 'isNR', title: 'NR' },
-    { type: 'validate', key: 'pagoValidado', title: 'NrValid' },
+    // { type: 'validate', key: 'pagoValidado', title: 'NrValid' },
     { type: 'npropio', key: 'nombre', title: 'Nombre' },
     { type: 'date', key: 'llegada', title: 'Inicio' },
     { type: 'date', key: 'salida', title: 'Fin' },
@@ -155,8 +160,7 @@ export class CieloListComponent implements OnInit {
     { type: 'conf', key: 'e', title: 'Status Rsva' },
     { type: 'desplazo', key: 'desplazo_o', title: 'Desplazo' },
     { type: 'date', key: 'dtCreated', title: 'Creacion' },
-    { type: 'default', key: 'asesor', title: 'Creador' },
-    { type: 'button', key: 'pagosRecibidos', title: 'Pagos' }
+    { type: 'default', key: 'asesor', title: 'Creador' }
   ]
 
   constructor(public _api: ApiService,
@@ -182,6 +186,7 @@ export class CieloListComponent implements OnInit {
   }
   ngOnInit() {
     this.titleService.setTitle('CyC - Cielo Listado');
+    this.getMdo()
     this.config = EasyTableServiceService.config
     this.config['paginationEnabled'] = true
     this.config['rows'] = 20
@@ -236,6 +241,27 @@ export class CieloListComponent implements OnInit {
 
   onSelected( item ){
     this.search['asesor'] = item.cieloUser
+  }
+
+  getMdo() {
+
+    this.loading['mdo'] = true;
+
+
+    this._api.restfulGet( '', 'Lists/cieloMdo' )
+                .subscribe( res => {
+
+                  this.loading['mdo'] = false;
+                  this.mdos = res['data']
+
+                }, err => {
+                  this.loading['mdo'] = false;
+
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
   }
 
   searchLocs() {

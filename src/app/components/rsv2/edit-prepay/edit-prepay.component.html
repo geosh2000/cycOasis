@@ -3,7 +3,7 @@
     <div class="clientInfo"><b class="text-success">{{ i['montoParcial'] | currency:'MXN':'symbol-narrow':'.2-2' }}</b> <button style="zoom: 0.8" mat-icon-button color='primary' (click)="editFlag = true" *ngIf="i['confirmok'] == null"><mat-icon>edit</mat-icon></button></div>
 
 </div>
-<div class="d-flex justify-content-start align-items-center" *ngIf="editFlag">
+<div class="d-flex justify-content-start flex-wrap align-items-center" *ngIf="editFlag">
     <ng-container *ngIf="!sfFlag">
         <mat-form-field class="example-full-width">
             <input style="font-size: 11px" matInput placeholder="Monto a Pagar" [value]="i['isParcial'] == 1 ? i['montoParcial'] : i['monto']" #monto5>

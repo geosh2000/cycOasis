@@ -492,6 +492,7 @@ export class CotizadorV2Component implements OnInit, OnDestroy {
         ticket: this.budgetTicket,
         noEdit: this.budgetNoEdit,
         lang: this.budgetLang,
+        moneda: this.moneda,
         subject: `Cotizacion ${this.dataForBudget['hotel']} del ${this.formatDate(this.dataForBudget['inicio'],'DD-MM-YYYY')} al ${this.formatDate(this.dataForBudget['fin'],'DD-MM-YYYY')}`
       };
 

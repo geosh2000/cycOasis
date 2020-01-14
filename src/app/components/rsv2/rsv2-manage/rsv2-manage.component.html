@@ -167,6 +167,35 @@
                     </div>
                 </div>
                 <hr>
+                <ng-container *ngIf="rsvHistory.length > 1">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <div class="clientConcept"><b>Reservas:</b></div>
+                        <div class="clientInfo">
+                            <ul>
+                                <ng-container *ngFor="let rh of rsvHistory">
+                                    <ng-container *ngIf="rh.ml != data['master']['masterlocatorid']">
+                                        <li *ngIf="rh.st != 'X'" [ngClass]="{'text-warning': rh.st == 'Q', 'text-success': rh.st == 'R','text-info': rh.st == 'Exp'}"><a href="/#/rsv2/{{ rh.ml }}" target="_blank">{{ rh.ml }} ({{ rh.services }})</a></li>
+                                        <li *ngIf="rh.st == 'X'" class='text-danger'><del><a href="/#/rsv2/{{ rh.ml }}" target="_blank">{{ rh.ml }} ({{ rh.services }})</a></del></li>
+                                    </ng-container>
+                                </ng-container>
+                            </ul>
+                            <ng-container *ngIf="loading['rsvHistory']">
+                                <mat-progress-bar mode="buffer"></mat-progress-bar>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <hr>
+                </ng-container>
+                <ng-container *ngIf="data['master']['payments'] != null">
+
+                    <div class="d-flex justify-content-start align-items-center">
+                        <div class="clientConcept"><b>Pagos:</b></div>
+                        <div class="clientInfo">
+                            <button mat-button data-toggle="modal" data-target="#paymentSummary">Ver pagos</button>
+                        </div>
+                    </div>
+                    <hr>
+                </ng-container>
                 <div class="d-flex justify-content-start align-items-center">
                     <div class="clientConcept"><b>Comision:</b></div>
                     <div class="clientInfo">{{ data['master']['comision'] | currency:'MXN':'symbol-narrow':'.2-2' }} MXN</div>
@@ -315,4 +344,38 @@
 
 <!-- ====================== MODAL DE REG PAYMENT ====================== -->
 <app-rsv-payment-registry></app-rsv-payment-registry>
+<!-- ====================== FIN MODAL DE REG PAYMENT ====================== -->
+
+<!-- ====================== MODAL SUMMARY PAYMENT ====================== -->
+<div class="modal fade" id="paymentSummary" tabindex="-1" role="dialog" aria-labelledby="paymentSummaryLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentSummaryLabel">Resumen de Pagos {{ data['master']['masterlocator'] }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-bordered table-hover table-striped text-sm" *ngIf="data['master']['payments']">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let t of data['master']['payments'][0] | keys">{{ t }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let p of data['master']['payments']" [ngClass]="{'text-danger': p['monto'] < 0}">
+                            <td *ngFor="let c of p | keys">
+                                {{ p[c] }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- ====================== FIN MODAL DE REG PAYMENT ====================== -->

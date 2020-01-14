@@ -23,7 +23,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   templateUrl: './rsv2-manage.component.html',
   styleUrls: ['./rsv2-manage.component.css']
 })
-export class Rsv2ManageComponent implements OnInit {
+export class Rsv2ManageComponent implements OnInit, OnDestroy {
 
   @ViewChild(DoPaymentComponent, {static:false}) _payment:DoPaymentComponent
   @ViewChild(UploadImageComponent, {static: false}) _upl:UploadImageComponent
@@ -42,6 +42,8 @@ export class Rsv2ManageComponent implements OnInit {
   viewLoc:any
   history:any = []
   mlTicket:any
+  zdClientId:any
+  rsvHistory = []
 
   maxPenalidad = 0
   xldPenalidad
@@ -111,6 +113,10 @@ export class Rsv2ManageComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    jQuery('.modal').modal('hide');
+  }
+
   setPenalty( e ){
     this.penaltyXld.controls['penalty'].setValue(this.xldPenalidad)
     console.log(this.penaltyXld)
@@ -138,6 +144,7 @@ export class Rsv2ManageComponent implements OnInit {
 
   getLoc( l ){
     this.loading['loc'] = true
+    this.rsvHistory = []
 
     this._api.restfulGet( l, 'Rsv/manage2Loc' )
                 .subscribe( res => {
@@ -154,7 +161,9 @@ export class Rsv2ManageComponent implements OnInit {
 
                     this.data = data
                     this.mlTicket = data['master']['mlTicket']
+                    this.zdClientId = data['master']['zdUserId']
                     this.getHistory(data['master']['mlTicket'])
+                    this.getRsvHistory(data['master']['zdUserId'])
                     this.rsvTypeCheck()
                   }else{
                     this.data = {
@@ -319,6 +328,29 @@ export class Rsv2ManageComponent implements OnInit {
 
                 }, err => {
                   this.loading['history'] = false;
+
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
+  }
+
+  getRsvHistory( zdClientId = this.zdClientId ){
+
+    this.loading['rsvHistory'] = true
+    this.rsvHistory = []
+
+    this._api.restfulGet( zdClientId, 'Rsv/getRsvHistory' )
+                .subscribe( res => {
+
+                  this.loading['rsvHistory'] = false;
+                  let rh = []
+
+                  this.rsvHistory = res['data']
+
+                }, err => {
+                  this.loading['rsvHistory'] = false;
 
                   const error = err.error;
                   this.toastr.error( error.msg, err.status );

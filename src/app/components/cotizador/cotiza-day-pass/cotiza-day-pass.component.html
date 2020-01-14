@@ -1,9 +1,9 @@
-<app-search-bar-cotizador (search)="search($event)" [paxJr]="true" [agesDispl]="false" [maxJuniors]="10" [maxMenores]="10" [loading]="loading['cotizar']"></app-search-bar-cotizador>
+<app-search-bar-cotizador (search)="search($event)" [paxJr]="true" [minDate]="minDate" [agesDispl]="false" [maxJuniors]="10" [maxMenores]="10" [loading]="loading['cotizar']"></app-search-bar-cotizador>
 <div class="container" *ngIf="results.length > 0">
     <mat-card>
         <div class="d-flex justify-content-between">
-            <span><h3><i class="far fa-calendar-alt p-1"></i> {{ formatDate(occup['inicio'],'DD MMM \'YY') }}</h3></span>
-            <span><h3><i class="fas fa-user p-1"></i>{{ occup['adultos'] }} adultos y {{ occup['menores'] }} menores</h3></span>
+            <span><h3><i class="far fa-calendar-alt p-1"></i> {{ formatDate(searchParams['inicio'],'DD MMM \'YY') }}</h3></span>
+            <span><h3><i class="fas fa-user p-1"></i>{{ searchParams['adultos'] }} adultos,  {{ searchParams['juniors'] }} juniors y {{ searchParams['menores'] }} menores</h3></span>
         </div>
     </mat-card>
     <mat-accordion class="acc-headers">
@@ -26,8 +26,10 @@
                         <ng-container *ngIf="!(this._search.moneda && h['totalMXN'] == 0) && !(!this._search.moneda && h['totalUSD'] == 0)">
                             <div>
                                 <div class="d-flex justify-content-end">
-                                    <div [style.width.px]="110" class='text-right pl-3' style="text-decoration:line-through">{{ (this._search.moneda ? h['totalMXN'] / (1 - h['disc'] ) : h['totalUSD'] / (1 - h['disc'] )) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }}</div>
-                                    <div [style.width.px]="45" class='text-right pl-3 text-success font-weight-bold'>{{ h['disc'] | percent:'.0-0' }}</div>
+                                    <ng-container *ngIf="notToday()">
+                                        <div [style.width.px]="110" class='text-right pl-3' style="text-decoration:line-through">{{ (this._search.moneda ? h['totalMXN'] / (1 - h['disc'] ) : h['totalUSD'] / (1 - h['disc'] )) | currency:(this._search.moneda ? 'MXN' : 'USD'):'symbol-narrow':'.2-2' }}</div>
+                                        <div [style.width.px]="45" class='text-right pl-3 text-success font-weight-bold'>{{ h['disc'] | percent:'.0-0' }}</div>
+                                    </ng-container>
                                     <div [style.width.px]="130" class="text-right text-success pl-3 font-weight-bold">
 
                                         <mat-chip-list aria-label="Fish selection">
@@ -61,10 +63,12 @@
                         </mat-chip-list>
                     </div>
                     <p><small class="text-right">* {{ h['descripcion'] }}</small></p>
-                    <p><small class="text-right">* Adultos de 15 años en adelante (menores de 18 no se les sirve alcohol)</small></p>
-                    <p><small class="text-right">* Juniors de 11 a 14 años</small></p>
-                    <p><small class="text-right">* Menores de 4 a 10 años</small></p>
-                    <p><small class="text-right">* Menores de 4 años no pagan</small></p>
+                    <ng-container *ngIf="h['hotel'] != 'GSC'">
+                        <p><small class="text-right">* Adultos de 15 años en adelante (menores de 18 no se les sirve alcohol)</small></p>
+                        <p><small class="text-right">* Juniors de 11 a 14 años</small></p>
+                        <p><small class="text-right">* Menores de 4 a 10 años</small></p>
+                        <p><small class="text-right">* Menores de 4 años no pagan</small></p>
+                    </ng-container>
                     <p><small class="text-right">* Penalización por hora extra de $200 MXN por persona</small></p>
                 </div>
                 <mat-action-row *ngIf="!(this._search.moneda && h['totalMXN'] == 0) && !(!this._search.moneda && h['totalUSD'] == 0)">

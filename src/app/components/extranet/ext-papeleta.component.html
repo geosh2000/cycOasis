@@ -310,7 +310,7 @@
                 </div>
                 <div class="d-flex justify-content-start align-items-center">
                     <div class="clientConcept"><b>Cuenta:</b></div>
-                    <div class="clientInfo">
+                    <div class="clientInfo" *ngIf="data['payments'][0]">
                         <span *ngIf="data['payments'][0]['complejo'] == 'Vcm'">VCM</span>
                         <span *ngIf="data['payments'][0]['complejo'] != 'Vcm'" class="text-danger"><b>Cargo a Oasis ({{ data['payments'][0]['complejo'] ? data['items'][0]['complejo'] : data['items'][0]['hotel'] }})</b></span>
                     </div>
