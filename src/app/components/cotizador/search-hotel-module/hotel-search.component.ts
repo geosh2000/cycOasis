@@ -116,7 +116,7 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
 
   @ViewChildren('fltr') _filters: QueryList<SearchHotelModuleComponent>;
   @ViewChildren('zdu') _zdUser: QueryList<SearchZdUserComponent>;
-  @ViewChild(CreateRsvComponent,{static:false}) _rsv:CreateRsvComponent;
+  @ViewChild(CreateRsvComponent) _rsv:CreateRsvComponent;
 
   currentUser: any;
   showContents = false;

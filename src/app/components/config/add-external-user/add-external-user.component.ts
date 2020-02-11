@@ -17,7 +17,7 @@ import { ApiService, InitService } from '../../../services/service.index';
 })
 export class AddExternalUserComponent implements OnInit {
 
-  @ViewChild( DaterangePickerComponent, {static:false} ) private picker: DaterangePickerComponent
+  @ViewChild(DaterangePickerComponent) private picker: DaterangePickerComponent
 
   showContents:boolean = false
   mainCredential = 'allmighty'

@@ -45,7 +45,7 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<any> {
 })
 export class ExtranetListComponent implements OnInit, OnDestroy {
 
-  @ViewChild(ExtPapeletaComponent, {static: false}) _ext:ExtPapeletaComponent
+  @ViewChild(ExtPapeletaComponent) _ext:ExtPapeletaComponent
 
   currentUser: any
   showContents = false

@@ -12,7 +12,7 @@ import { LogoutComponent } from '../logout/logout.component';
 })
 export class NavbarComponent {
 
-  @ViewChild(LogoutComponent,{static:false}) private _logout:LogoutComponent
+  @ViewChild(LogoutComponent) private _logout:LogoutComponent
   @Input() sbStatus:boolean
   @Input() advStatus:boolean
   @Output() sideBar = new EventEmitter

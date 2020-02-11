@@ -160,7 +160,7 @@ export class DasboardVentaPrepagoPorAsesorComponent implements OnInit {
   dataExample = []
 
   divWidth = 1200
-  @ViewChild('chartContainerPPasesor', {static: false}) parentDiv:ElementRef;
+  @ViewChild('chartContainerPPasesor') parentDiv:ElementRef;
 
 
   constructor(public _api: ApiService,

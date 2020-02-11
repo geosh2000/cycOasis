@@ -22,8 +22,8 @@ export class AppComponent {
     navbar  : true
   };
 
-  @ViewChild(NavbarComponent,{static:false}) _nav:NavbarComponent
-  @ViewChild(LogoutComponent,{static:false}) private _logout:LogoutComponent
+  @ViewChild(NavbarComponent) _nav:NavbarComponent
+  @ViewChild(LogoutComponent) private _logout:LogoutComponent
   // @ViewChild(AvisosGlobalesComponent,{static:false}) public _adv:AvisosGlobalesComponent
 
 

@@ -23,7 +23,7 @@ export class DetDetalleComponent implements OnChanges {
   @Input() asesor:any
   @Output() error = new EventEmitter<any>()
 
-  @ViewChild(UploadImageComponent,{static:false}) _image:UploadImageComponent
+  @ViewChild(UploadImageComponent) _image:UploadImageComponent
 
   loading:Object = {}
 

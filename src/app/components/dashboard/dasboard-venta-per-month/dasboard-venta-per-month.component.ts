@@ -157,7 +157,7 @@ export class DasboardVentaPerMonthComponent implements OnInit {
   dataExample = []
 
   divWidth = 1200
-  @ViewChild('chartContainerMes', {static: false}) parentDiv:ElementRef;
+  @ViewChild('chartContainerMes') parentDiv:ElementRef;
 
 
   constructor(public _api: ApiService,

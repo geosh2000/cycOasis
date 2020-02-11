@@ -189,7 +189,7 @@ export class DasboardVentaAlDiaComponent implements OnInit {
   dataExample = []
 
   divWidth = 1200
-  @ViewChild('chartContainer', {static: false}) parentDiv:ElementRef;
+  @ViewChild('chartContainer') parentDiv:ElementRef;
 
 
   constructor(public _api: ApiService,

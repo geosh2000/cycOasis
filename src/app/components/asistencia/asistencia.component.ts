@@ -26,9 +26,9 @@ import * as moment from 'moment-timezone';
 })
 export class AsistenciaComponent implements OnInit {
 
-  @ViewChild( DaterangePickerComponent,{static:false} ) private picker: DaterangePickerComponent
-  @ViewChild( AddAusentismoComponent,{static:false} ) _aus: AddAusentismoComponent
-  @ViewChild( PyaExceptionComponent,{static:false} ) _pya:PyaExceptionComponent
+  @ViewChild(DaterangePickerComponent) private picker: DaterangePickerComponent
+  @ViewChild(AddAusentismoComponent) _aus: AddAusentismoComponent
+  @ViewChild(PyaExceptionComponent) _pya:PyaExceptionComponent
 
   currentUser: any
   showContents:boolean = false

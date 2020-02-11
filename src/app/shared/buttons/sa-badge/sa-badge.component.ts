@@ -14,7 +14,7 @@ export class SaBadgeComponent implements OnInit {
   @Input() date:any
   @Input() dataAsesor:Object
 
-  @ViewChild('i',{static:false}) public popover: NgbPopover;
+  @ViewChild('i') public popover: NgbPopover;
 
   btnClass:string = ''
   displayText:string = ''

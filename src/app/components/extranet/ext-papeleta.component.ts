@@ -20,7 +20,7 @@ import { UploadImageComponent } from '../formularios/upload-image.component';
 })
 export class ExtPapeletaComponent implements OnInit {
 
-  @ViewChild(UploadImageComponent, {static: false}) _upl:UploadImageComponent
+  @ViewChild(UploadImageComponent) _upl:UploadImageComponent
   @Output() reload = new EventEmitter<any>()
 
   currentUser: any;

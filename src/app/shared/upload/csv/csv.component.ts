@@ -27,7 +27,7 @@ export class CsvComponent implements OnInit {
 
   imageForm: FormGroup
   imageFileUp: File
-  @ViewChild('imageFile',{static:false}) image_File
+  @ViewChild('imageFile') image_File
 
   constructor(
                 private fb:FormBuilder,

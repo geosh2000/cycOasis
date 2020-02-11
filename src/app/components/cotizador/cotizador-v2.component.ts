@@ -117,7 +117,7 @@ export class CotizadorV2Component implements OnInit, OnDestroy {
   @Output() rsv = new EventEmitter<any>()
   @ViewChildren('fltr') _filters: QueryList<SearchHotelModuleComponent>;
   @ViewChildren('zdu') _zdUser: QueryList<SearchZdUserComponent>;
-  @ViewChild(CreateRsvComponent,{static:false}) _rsv:CreateRsvComponent;
+  @ViewChild(CreateRsvComponent) _rsv:CreateRsvComponent;
 
   currentUser: any;
   showContents = false;

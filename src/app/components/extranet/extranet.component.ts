@@ -16,7 +16,7 @@ import * as moment from 'moment-timezone';
 })
 export class ExtranetComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(ExtPapeletaComponent, {static: false}) _ppl:ExtPapeletaComponent
+  @ViewChild(ExtPapeletaComponent) _ppl:ExtPapeletaComponent
 
   currentUser: any;
   showContents = false;

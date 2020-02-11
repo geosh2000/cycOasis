@@ -17,7 +17,7 @@ import { CreateRsvComponent } from '../create-rsv/create-rsv.component';
 })
 export class CotCreateRsvComponent implements OnInit {
 
-  @ViewChild(CreateRsvComponent, {static: false}) _create:CreateRsvComponent
+  @ViewChild(CreateRsvComponent) _create:CreateRsvComponent
 
   data:Object = {
     data: {},

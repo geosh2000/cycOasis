@@ -42,8 +42,8 @@ import { RsvPaymentAdminComponent } from '../rsv-payment-admin/rsv-payment-admin
 export class RsvManageComponent implements OnInit, OnDestroy {
 
   // @ViewChild(AddNewAgentComponent) addNew:AddNewAgentComponent
-  @ViewChild(RsvAddPaymentComponent,{static:false}) _addP:RsvAddPaymentComponent;
-  @ViewChild(RsvPaymentAdminComponent,{static:false}) _adminP:RsvPaymentAdminComponent;
+  @ViewChild(RsvAddPaymentComponent) _addP:RsvAddPaymentComponent;
+  @ViewChild(RsvPaymentAdminComponent) _adminP:RsvPaymentAdminComponent;
 
   currentUser: any;
   showContents = false;

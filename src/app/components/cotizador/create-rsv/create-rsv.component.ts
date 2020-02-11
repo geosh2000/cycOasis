@@ -37,7 +37,7 @@ import * as moment from 'moment-timezone';
 })
 export class CreateRsvComponent implements OnInit {
 
-  @ViewChild( SearchZdUserComponent ,{static:false}) private zdSearch: SearchZdUserComponent
+  @ViewChild(SearchZdUserComponent) private zdSearch: SearchZdUserComponent
   // tslint:disable-next-line: no-output-native
   @Output() error = new EventEmitter<any>()
   @Output() save = new EventEmitter<any>()

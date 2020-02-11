@@ -15,7 +15,7 @@ export class AsistenciaBadgeComponent implements OnInit {
   @Input() dataAsesor:Object
 
   // @ViewChild('i') public popover: NgbPopover;
-  @ViewChild('i',{static:false}) public popover: NgbPopover;
+  @ViewChild('i') public popover: NgbPopover;
 
   btnClass:string = ''
   displayText:string = ''

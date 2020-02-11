@@ -80,7 +80,7 @@ declare var jQuery: any;
 })
 export class CotizaDayPassComponent implements OnInit {
 
-  @ViewChild(SearchBarCotizadorComponent, {static:false}) _search:SearchBarCotizadorComponent
+  @ViewChild(SearchBarCotizadorComponent) _search:SearchBarCotizadorComponent
   @Output() rsv = new EventEmitter<any>()
 
   pickNum:any = []

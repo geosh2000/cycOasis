@@ -43,7 +43,7 @@ import { NgForm } from '@angular/forms';
 })
 export class CargaHorariosComponent implements OnInit {
 
-  @ViewChild(ContextMenuComponent, {static:false}) public basicMenu: ContextMenuComponent;
+  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
   mainCredential: any = 'sch'
   showContents: boolean;

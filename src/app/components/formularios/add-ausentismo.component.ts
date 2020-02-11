@@ -16,7 +16,7 @@ import * as moment from 'moment-timezone';
 })
 export class AddAusentismoComponent implements OnInit {
 
-  @ViewChild( DaterangePickerComponent ,{static:false}) private picker: DaterangePickerComponent
+  @ViewChild(DaterangePickerComponent) private picker: DaterangePickerComponent
 
   @Output() notif = new EventEmitter<any>()
 

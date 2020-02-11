@@ -40,7 +40,7 @@ export class CambioPuestoComponent implements OnChanges {
 
   @Output() error = new EventEmitter<any>()
   @Output() save = new EventEmitter<any>()
-  @ViewChild( DaterangePickerComponent ,{static:false}) private picker: DaterangePickerComponent
+  @ViewChild(DaterangePickerComponent) private picker: DaterangePickerComponent
 
   formCambioPuesto:FormGroup;
   confirmCambio:boolean = false

@@ -30,7 +30,7 @@ export class AltasBatchComponent implements OnInit, OnDestroy {
   imageForm: FormGroup
   imageFileUp: File
   jsonFile:any
-  @ViewChild('imageFile',{static:false}) image_File
+  @ViewChild('imageFile') image_File
 
   loading:Object = {}
   saving:boolean = false

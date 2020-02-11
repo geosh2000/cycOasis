@@ -203,7 +203,7 @@ export class DasboardVentaShareComponent implements OnInit {
   dataExample = []
 
   divWidth = 1200
-  @ViewChild('chartContainerShare', {static: false}) parentDiv:ElementRef;
+  @ViewChild('chartContainerShare') parentDiv:ElementRef;
 
 
   constructor(public _api: ApiService,

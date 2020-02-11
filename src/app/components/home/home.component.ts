@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit, OnChanges {
   birthday:any = false
 
   @Input() tokenStatus:boolean
-  @ViewChild(DasboardVentaFcComponent, {static: false}) _gphVenta:DasboardVentaFcComponent
-  @ViewChild(DasboardComisionesComponent, {static: false}) _comision:DasboardComisionesComponent
+  @ViewChild(DasboardVentaFcComponent) _gphVenta:DasboardVentaFcComponent
+  @ViewChild(DasboardComisionesComponent) _comision:DasboardComisionesComponent
 
   token:boolean
   asesorShow:any

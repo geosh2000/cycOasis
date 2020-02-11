@@ -25,10 +25,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class Rsv2ManageComponent implements OnInit, OnDestroy {
 
-  @ViewChild(DoPaymentComponent, {static:false}) _payment:DoPaymentComponent
-  @ViewChild(UploadImageComponent, {static: false}) _upl:UploadImageComponent
-  @ViewChild(RsvLinkPaymentDirectComponent,{static:false}) _linkP:RsvLinkPaymentDirectComponent;
-  @ViewChild(RsvPaymentRegistryComponent,{static:false}) _regP:RsvPaymentRegistryComponent;
+  @ViewChild(DoPaymentComponent) _payment:DoPaymentComponent
+  @ViewChild(UploadImageComponent) _upl:UploadImageComponent
+  @ViewChild(RsvLinkPaymentDirectComponent) _linkP:RsvLinkPaymentDirectComponent;
+  @ViewChild(RsvPaymentRegistryComponent) _regP:RsvPaymentRegistryComponent;
 
   penaltyXld:FormGroup
 

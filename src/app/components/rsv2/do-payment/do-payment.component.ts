@@ -15,8 +15,8 @@ import { SearchPaymentComponent } from '../../../shared/search-payment/search-pa
 })
 export class DoPaymentComponent implements OnInit {
 
-  @ViewChild('shoes', {static: false}) _shoes:any
-  @ViewChild(SearchPaymentComponent, {static: false}) _sp:SearchPaymentComponent
+  @ViewChild('shoes') _shoes:any
+  @ViewChild(SearchPaymentComponent) _sp:SearchPaymentComponent
   @Output() paid  = new EventEmitter()
   @Input() ml:any
 

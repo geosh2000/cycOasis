@@ -143,7 +143,7 @@ export class DasboardVentaPrepagoPorDiaComponent implements OnInit {
   dataExample = []
 
   divWidth = 1200
-  @ViewChild('chartContainerPPdia', {static: false}) parentDiv:ElementRef;
+  @ViewChild('chartContainerPPdia') parentDiv:ElementRef;
 
 
   constructor(public _api: ApiService,

@@ -24,7 +24,7 @@ export class EditDetailsComponent implements OnChanges {
   @Output() closeDialog = new EventEmitter<any>()
   @Output() save = new EventEmitter<any>()
 
-  @ViewChild( DaterangePickerComponent,{static:false} ) private picker: DaterangePickerComponent
+  @ViewChild(DaterangePickerComponent) private picker: DaterangePickerComponent
 
   formDetail:FormGroup
   listProfiles

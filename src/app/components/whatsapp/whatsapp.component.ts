@@ -17,8 +17,8 @@ declare var jQuery: any;
 })
 export class WhatsappComponent implements OnInit, OnDestroy {
 
-  @ViewChild(ChatWindowComponent, {static: false}) _chat:ChatWindowComponent
-  @ViewChild(ConversationsComponent, {static: false}) _conv:ConversationsComponent
+  @ViewChild(ChatWindowComponent) _chat:ChatWindowComponent
+  @ViewChild(ConversationsComponent) _conv:ConversationsComponent
 
   ticket:any
   agentId:any

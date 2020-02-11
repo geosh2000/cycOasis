@@ -118,8 +118,8 @@ export class NgbDateNativeAdapter extends NgbDateAdapter<any> {
 })
 export class RsvPaymentListComponent implements OnInit {
 
-  @ViewChild(RsvPaymentRegistryComponent,{static:false}) _regP:RsvPaymentRegistryComponent;
-  @ViewChild(RsvLinkAnyPaymentComponent,{static:false}) _linkP:RsvLinkAnyPaymentComponent;
+  @ViewChild(RsvPaymentRegistryComponent) _regP:RsvPaymentRegistryComponent;
+  @ViewChild(RsvLinkAnyPaymentComponent) _linkP:RsvLinkAnyPaymentComponent;
 
   currentUser: any
   showContents = false

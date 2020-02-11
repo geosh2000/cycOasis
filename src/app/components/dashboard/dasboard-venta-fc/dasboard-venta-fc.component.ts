@@ -204,7 +204,7 @@ export class DasboardVentaFcComponent implements OnInit {
   dataExample = []
 
   divWidth = 1200
-  @ViewChild('chartContainerFc', {static: false}) parentDiv:ElementRef;
+  @ViewChild('chartContainerFc') parentDiv:ElementRef;
 
 
   constructor(public _api: ApiService,

@@ -16,7 +16,7 @@ declare var jQuery: any;
 })
 export class MainCotizadorComponent implements OnInit {
 
-  @ViewChild(CotCreateRsvComponent, {static: false}) _cot:CotCreateRsvComponent
+  @ViewChild(CotCreateRsvComponent) _cot:CotCreateRsvComponent
 
   products: any = [];
   shownIndex: any = 0;

@@ -33,7 +33,7 @@ export class GraphCallStatsComponent implements AfterViewInit, OnChanges {
     loading = {}
     dataExample = []
 
-    @ViewChild('chartDiv', {static: false}) parentDiv:ElementRef;
+    @ViewChild('chartDiv') parentDiv:ElementRef;
 
     // @ViewChild('chartContainer') parentDiv:ElementRef;
     @HostListener('window:resize') onResize() {
