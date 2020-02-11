@@ -24,6 +24,8 @@ import { MainCotizadorComponent } from './components/cotizador/main-cotizador.co
 import { Rsv2ManageComponent } from './components/rsv2/rsv2-manage/rsv2-manage.component';
 import { ExtranetComponent } from './components/extranet/extranet.component';
 import { ExtranetListComponent } from './components/extranet/extranet-list/extranet-list.component';
+import { TarifarioComponent } from './components/tarifario/tarifario.component';
+import { WhatsappComponent } from './components/whatsapp/whatsapp.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -65,11 +67,16 @@ const routes: Routes = [
   { path: 'rsvPaymentList', component: RsvPaymentListComponent },
   { path: 'dayPassList', component: RsvDayPassListComponent },
 
+  { path: 'tarifas', component: TarifarioComponent },
+
   { path: 'cieloList', component: CieloListComponent },
 
   { path: 'config/chgSuperCC', component: CcSuperAssignComponent },
 
   { path: 'geosh/test', component: TestComponent },
+
+  { path: 'whatsapp', component: WhatsappComponent },
+  { path: 'whatsapp/:ticket', component: WhatsappComponent },
 
 ];
 

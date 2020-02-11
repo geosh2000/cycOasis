@@ -61,6 +61,8 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { RouterModule } from '@angular/router';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { CommonModule } from '@angular/common';
+import { ConversationsComponent } from './components/whatsapp/conversations/conversations.component';
+import { ChatWindowComponent } from './components/whatsapp/chat-window/chat-window.component';
 
 // Pipes
 import { KeysPipe } from './pipes/keys.pipe';
@@ -174,6 +176,9 @@ import { CotizaXtrasComponent } from './components/cotizador/cotiza-xtras/cotiza
 import { CotizaConcertComponent } from './components/cotizador/cotiza-concert/cotiza-concert.component';
 import { RsvLinkPaymentDirectComponent } from './components/rsv/rsv-link-payment-direct/rsv-link-payment-direct.component';
 import { EditPrepayComponent } from './components/rsv2/edit-prepay/edit-prepay.component';
+import { TarifarioComponent } from './components/tarifario/tarifario.component';
+import { WhatsappComponent } from './components/whatsapp/whatsapp.component';
+import { NgxAudioPlayerModule } from 'ngx-audio-player';
 
 @NgModule({
   declarations: [
@@ -286,7 +291,11 @@ import { EditPrepayComponent } from './components/rsv2/edit-prepay/edit-prepay.c
     CotizaXtrasComponent,
     CotizaConcertComponent,
     RsvLinkPaymentDirectComponent,
-    EditPrepayComponent
+    EditPrepayComponent,
+    TarifarioComponent,
+    WhatsappComponent,
+    ConversationsComponent,
+    ChatWindowComponent
 
   ],
   imports: [
@@ -363,6 +372,8 @@ import { EditPrepayComponent } from './components/rsv2/edit-prepay/edit-prepay.c
     // END ANGULAR MATERIAL
     // ==================================================
     NgxMaterialTimepickerModule.setLocale('es-MX'),
+    NgxAudioPlayerModule
+
   ],
   providers: [
     NavbarService,
