@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="container" *ngIf="supList.length > 0">
-                <select2 [data]="supListFilter | orderBy: 'text'" (valueChanged)="selectedVal($event)" [options]="selectOptions" width="600"></select2>
+                <ng-select2 [data]="supListFilter | orderBy: 'text'" (valueChanged)="selectedVal($event)" [options]="selectOptions" width="600"></ng-select2>
             </div>
         </div>
 

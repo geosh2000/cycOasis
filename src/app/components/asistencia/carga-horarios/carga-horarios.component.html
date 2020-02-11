@@ -125,7 +125,7 @@
                         <p [ngClass]="{'text-white': listScheds[asesor][item]['sel']}" style="color: rgb(168, 45, 148)">c: {{ listScheds[asesor][item] ? ( listScheds[asesor][item]['data']['cs'] == listScheds[asesor][item]['data']['ce'] ? 'NA' : printMoment( listScheds[asesor][item]['data']['cs'], 'HH:mm' ) + ' - ' + printMoment( listScheds[asesor][item]['data']['ce'], 'HH:mm' )) : 'NA' }}</p>
                         <p class="text-truncate" [ngClass]="{'text-white': listScheds[asesor][item]['sel']}" style="color: rgb(224, 188, 26)">a: {{ listScheds[asesor][item] ? ( listScheds[asesor][item]['data']['aus'] ? listScheds[asesor][item]['data']['aus'] : '') : '' }}</p>
                     </button>
-                        <select2 *ngIf="listScheds[asesor][item]['data']['dep'] == 29" [value]="listScheds[asesor][item]['data']['pdv']" [data]="pdvList | orderBy: 'text'" (valueChanged)="selectedVal(asesor, item, $event)" [options]="selectOptions" width="140"></select2>
+                        <ng-select2 *ngIf="listScheds[asesor][item]['data']['dep'] == 29" [(ngModel)]="listScheds[asesor][item]['data']['pdv']" [data]="pdvList | orderBy: 'text'" (valueChanged)="selectedVal(asesor, item, $event)" [options]="selectOptions" width="140"></ng-select2>
                     </td>
                 </tr>
             </tbody>
