@@ -10,9 +10,46 @@ import { NavbarService, AsesoresService, LoginService, CredentialsService, Token
 
 // Components
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatAutocompleteModule,
+  MatBadgeModule,
+  MatBottomSheetModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatTreeModule,} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTreeModule } from '@angular/cdk/tree';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgDragDropModule } from 'ng-drag-drop';
@@ -24,8 +61,6 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { RouterModule } from '@angular/router';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { CommonModule } from '@angular/common';
-import { ConversationsComponent } from './components/whatsapp/conversations/conversations.component';
-import { ChatWindowComponent } from './components/whatsapp/chat-window/chat-window.component';
 
 // Pipes
 import { KeysPipe } from './pipes/keys.pipe';
@@ -75,6 +110,7 @@ import { AltasBatchComponent } from './components/hc/altas-batch/altas-batch.com
 import { BatchAsesorFormComponent } from './components/hc/altas-batch/batch-asesor-form/batch-asesor-form.component';
 import { CargaHorariosComponent } from './components/asistencia/carga-horarios/carga-horarios.component';
 import { ContextMenuModule } from 'ngx-contextmenu';
+import { Select2Module } from 'ng2-select2';
 import { AsistenciaComponent } from './components/asistencia/asistencia.component';
 import { CotizadorComponent } from './components/cotizador/cotizador.component';
 import { SearchHotelModuleComponent } from './components/cotizador/search-hotel-module/search-hotel-module.component';
@@ -138,44 +174,7 @@ import { CotizaXtrasComponent } from './components/cotizador/cotiza-xtras/cotiza
 import { CotizaConcertComponent } from './components/cotizador/cotiza-concert/cotiza-concert.component';
 import { RsvLinkPaymentDirectComponent } from './components/rsv/rsv-link-payment-direct/rsv-link-payment-direct.component';
 import { EditPrepayComponent } from './components/rsv2/edit-prepay/edit-prepay.component';
-import { TarifarioComponent } from './components/tarifario/tarifario.component';
 import { WhatsappComponent } from './components/whatsapp/whatsapp.component';
-import { NgxAudioPlayerModule } from 'ngx-audio-player';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTreeModule } from '@angular/material/tree';
-import { LSelect2Module } from 'ngx-select2';
-import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -289,10 +288,7 @@ import { NgSelect2Module } from 'ng-select2';
     CotizaConcertComponent,
     RsvLinkPaymentDirectComponent,
     EditPrepayComponent,
-    TarifarioComponent,
-    WhatsappComponent,
-    ConversationsComponent,
-    ChatWindowComponent
+    WhatsappComponent
 
   ],
   imports: [
@@ -320,6 +316,7 @@ import { NgSelect2Module } from 'ng-select2';
       useBootstrap4: true,
       autoFocus: true
     }),
+    Select2Module,
     TableModule,
 
     MatButtonModule, MatCheckboxModule,
@@ -327,8 +324,8 @@ import { NgSelect2Module } from 'ng-select2';
     // ==================================================
     // START ANGULAR MATERIAL
     // ==================================================
-    // CdkTableModule,
-    // CdkTreeModule,
+    CdkTableModule,
+    CdkTreeModule,
     MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,
@@ -347,10 +344,12 @@ import { NgSelect2Module } from 'ng-select2';
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatNativeDateModule,
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatRippleModule,
     MatSelectModule,
     MatSidenavModule,
     MatSliderModule,
@@ -366,10 +365,6 @@ import { NgSelect2Module } from 'ng-select2';
     // END ANGULAR MATERIAL
     // ==================================================
     NgxMaterialTimepickerModule.setLocale('es-MX'),
-    NgxAudioPlayerModule,
-    LSelect2Module,
-    NgSelect2Module
-
   ],
   providers: [
     NavbarService,
